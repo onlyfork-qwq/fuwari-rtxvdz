@@ -17,7 +17,7 @@ lang: ''
 
 1，首先你需要一个聪明(`牛逼`的脑袋`(至少配置是2核心，能处理两个以上的问题，不会的可以去问ai，实在还不会加群问我)`[👉戳我加群](https://qm.qq.com/q/uq2BcUDNJg)
 
-2，你需要一个域名，可以用`免费域名`[👉戳我教你怎么注册](https://www.bilibili.com/video/BV13pGJzpEpT)`球球零度不要建议辣~OvO`
+2，你需要一个域名，可以用`免费域名`[👉戳我教你怎么注册](https://www.bilibili.com/video/BV1wwmdBjE1e)
 
 3，你最好要有一个海外的魔法`cloudflare有时候会上不去（）`
 
