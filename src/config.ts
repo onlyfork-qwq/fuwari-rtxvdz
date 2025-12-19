@@ -56,7 +56,7 @@ export const navBarConfig: NavBarConfig = {
 		{
 			name: "友链",
 			url: "/friends", // Internal links should not include the base path, as it is automatically added
-			external: false, // Show an external link icon and will open in a new tab
+			external: true, // Show an external link icon and will open in a new tab
 		},
 		{
 			name: "腾讯云监控",
