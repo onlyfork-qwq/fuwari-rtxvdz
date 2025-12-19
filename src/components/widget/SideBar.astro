@@ -21,17 +21,9 @@ const className = Astro.props.class;
             <div class="space-y-2">
                 <div class="flex items-center justify-between p-2 rounded-md hover:bg-[var(--float-panel-bg)] transition cursor-pointer route-item" id="route-hk" data-url="https://2fo.cc">
                     <span class="text-white">疼逊云</span>
-                    <div class="flex items-center">
-                        <span id="ping-hk" class="ping-indicator">●</span>
-                        <span id="ping-hk-value" class="ml-1 text-xs text-gray-400">--ms</span>
-                    </div>
                 </div>
                 <div class="flex items-center justify-between p-2 rounded-md hover:bg-[var(--float-panel-bg)] transition cursor-pointer route-item" id="route-netlify" data-url="https://v.2fo.cc">
                     <span class="text-white">Vercel(备用)</span>
-                    <div class="flex items-center">
-                        <span id="ping-netlify" class="ping-indicator">●</span>
-                        <span id="ping-netlify-value" class="ml-1 text-xs text-gray-400">--ms</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -39,19 +31,6 @@ const className = Astro.props.class;
 </div>
 
 <style>
-    .ping-indicator {
-        font-size: 1.2rem;
-        transition: color 0.3s ease;
-    }
-    .ping-fast {
-        color: #10b981; /* 绿色 - 流畅 */
-    }
-    .ping-medium {
-        color: #f59e0b; /* 黄色 - 中等 */
-    }
-    .ping-slow {
-        color: #ef4444; /* 红色 - 超时/慢 */
-    }
     .current-route {
         background: var(--primary) !important;
         color: white !important;
@@ -60,186 +39,6 @@ const className = Astro.props.class;
 </style>
 
 <script>
-    // 测试网络延迟的函数 - 优化版
-    async function testPing(url, timeout = 5000) {
-        return new Promise((resolve) => {
-            const start = Date.now();
-            let finished = false;
-
-            // 创建一个唯一的请求URL以避免缓存
-            const testUrl = url + '/favicon.ico?' + Date.now() + Math.random();
-            
-            // 使用fetch API测试延迟
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => {
-                if (!finished) {
-                    finished = true;
-                    controller.abort(); // 中断请求
-                    resolve({ ping: timeout, success: false });
-                }
-            }, timeout);
-
-            fetch(testUrl, {
-                method: 'GET',
-                signal: controller.signal,
-                mode: 'no-cors', // 避免跨域限制
-                cache: 'no-store', // 禁用缓存
-            })
-            .then(() => {
-                if (!finished) {
-                    finished = true;
-                    clearTimeout(timeoutId);
-                    const end = Date.now();
-                    const ping = end - start;
-                    resolve({ ping, success: true });
-                }
-            })
-            .catch(() => {
-                if (!finished) {
-                    finished = true;
-                    clearTimeout(timeoutId);
-                    const end = Date.now();
-                    const ping = end - start;
-                    resolve({ ping, success: false });
-                }
-            });
-        });
-    }
-
-    // 更精确的测速函数 - 发送HEAD请求
-    async function testPingWithHead(url, timeout = 5000) {
-        return new Promise((resolve) => {
-            const start = Date.now();
-            let finished = false;
-
-            // 创建一个HEAD请求URL，使用时间戳避免缓存
-            const testUrl = url + '/?' + Date.now() + Math.random();
-            
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => {
-                if (!finished) {
-                    finished = true;
-                    controller.abort();
-                    resolve({ ping: timeout, success: false });
-                }
-            }, timeout);
-
-            fetch(testUrl, {
-                method: 'HEAD', // HEAD请求只获取响应头，不获取响应体，更快速
-                signal: controller.signal,
-                mode: 'no-cors',
-                cache: 'no-store',
-            })
-            .then(() => {
-                if (!finished) {
-                    finished = true;
-                    clearTimeout(timeoutId);
-                    const end = Date.now();
-                    const ping = end - start;
-                    resolve({ ping, success: true });
-                }
-            })
-            .catch(() => {
-                if (!finished) {
-                    finished = true;
-                    clearTimeout(timeoutId);
-                    const end = Date.now();
-                    const ping = end - start;
-                    resolve({ ping, success: false });
-                }
-            });
-        });
-    }
-
-    // 执行多次测试取平均值，增加准确性
-    async function testPingAccurate(url, timeout = 5000, attempts = 3) {
-        const results = [];
-        for (let i = 0; i < attempts; i++) {
-            const result = await testPingWithHead(url, timeout);
-            results.push(result);
-            // 等待一小段时间避免请求过于频繁
-            await new Promise(resolve => setTimeout(resolve, 100));
-        }
-
-        // 只考虑成功的测试结果
-        const successfulResults = results.filter(r => r.success);
-        if (successfulResults.length === 0) {
-            // 如果所有测试都失败，返回失败结果
-            return { ping: timeout, success: false };
-        }
-
-        // 计算平均延迟
-        const totalPing = successfulResults.reduce((sum, r) => sum + r.ping, 0);
-        const avgPing = Math.round(totalPing / successfulResults.length);
-        const success = successfulResults.length > 0;
-
-        return { ping: avgPing, success };
-    }
-
-    // 更新延迟指示器
-    async function updatePingIndicator(elementId, url) {
-        const indicator = document.getElementById(elementId);
-        if (!indicator) return;
-        
-        // 根据 elementId 确定对应的延迟数值元素 ID
-        let valueElementId = '';
-        if (elementId === 'ping-hk') {
-            valueElementId = 'ping-hk-value';
-        } else if (elementId === 'ping-netlify') {
-            valueElementId = 'ping-netlify-value';
-        }
-        
-        const valueElement = document.getElementById(valueElementId);
-        if (valueElement) {
-            valueElement.textContent = '测速中...';
-            valueElement.classList.remove('text-green-500', 'text-yellow-500', 'text-red-500');
-            valueElement.classList.add('text-blue-500');
-        }
-
-        // 测试延迟 - 使用更准确的函数
-        const result = await testPingAccurate(url);
-        const ping = result.ping;
-        
-        // 移除旧的类
-        indicator.classList.remove('ping-fast', 'ping-medium', 'ping-slow');
-        
-        // 根据延迟添加适当的类
-        if (result.success) {
-            if (ping < 200) {
-                indicator.classList.add('ping-fast'); // 绿色 - 流畅
-            } else if (ping < 500) {
-                indicator.classList.add('ping-medium'); // 黄色 - 中等
-            } else {
-                indicator.classList.add('ping-slow'); // 红色 - 慢
-            }
-            
-            // 更新延迟数值显示
-            if (valueElement) {
-                valueElement.textContent = `${ping}ms`;
-                valueElement.classList.remove('text-gray-400', 'text-blue-500');
-                if (ping < 200) {
-                    valueElement.classList.add('text-green-500');
-                } else if (ping < 500) {
-                    valueElement.classList.add('text-yellow-500');
-                } else {
-                    valueElement.classList.add('text-red-500');
-                }
-            }
-        } else {
-            indicator.classList.add('ping-slow'); // 红色 - 超时
-            
-            // 更新延迟数值显示为超时
-            if (valueElement) {
-                valueElement.textContent = '超时';
-                valueElement.classList.remove('text-green-500', 'text-yellow-500', 'text-blue-500');
-                valueElement.classList.add('text-red-500');
-            }
-        }
-        
-        // 在元素上设置延迟信息，便于调试
-        indicator.title = `延迟: ${result.success ? ping + 'ms' : '超时'}`;
-    }
-
     // 打开路由链接
     function openRoute(url) {
         window.location.href = url;
@@ -283,22 +82,12 @@ const className = Astro.props.class;
         }
     }
 
-    // 页面加载后开始测试延迟
-    document.addEventListener('DOMContentLoaded', async () => {
+    // 页面加载后初始化
+    document.addEventListener('DOMContentLoaded', () => {
         // 高亮当前域名
         highlightCurrentRoute();
         
         // 添加点击事件监听器
         addClickListeners();
-        
-        // 立即测试两个路线的延迟
-        updatePingIndicator('ping-hk', 'https://2fo.cc');
-        updatePingIndicator('ping-netlify', 'https://v.2fo.cc');
-        
-        // 每60秒更新一次延迟（可根据需要调整，延长间隔以减少请求频率）
-        setInterval(() => {
-            updatePingIndicator('ping-hk', 'https://2fo.cc');
-            updatePingIndicator('ping-netlify', 'https://v.2fo.cc');
-        }, 60000);
     });
 </script>
