@@ -19,7 +19,7 @@ const className = Astro.props.class;
                 路线选择
             </h3>
             <div class="space-y-2">
-                <div class="flex items-center justify-between p-2 rounded-md hover:bg-[var(--float-panel-bg)] transition cursor-pointer route-item" id="route-hk" data-url="https://2fo.cc">
+                <div class="flex items-center justify-between p-2 rounded-md hover:bg-[var(--float-panel-bg)] transition cursor-pointer route-item" id="route-hk" data-url="https://b.2fo.cc">
                     <span class="text-white">疼逊云</span>
                 </div>
                 <div class="flex items-center justify-between p-2 rounded-md hover:bg-[var(--float-panel-bg)] transition cursor-pointer route-item" id="route-netlify" data-url="https://v.2fo.cc">
@@ -55,7 +55,7 @@ const className = Astro.props.class;
         routeNetlify?.classList.remove('current-route');
         
         // 根据当前域名高亮对应项
-        if (currentHost === '2fo.cc' || currentHost === 'www.2fo.cc') {
+        if (currentHost === '2fo.cc' || currentHost === 'www.b.2fo.cc') {
             routeHk?.classList.add('current-route');
         } else if (currentHost === 'v.2fo.cc' || currentHost === 'www.v.2fo.cc') {
             routeNetlify?.classList.add('current-route');
