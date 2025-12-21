@@ -1,12 +1,12 @@
 ---
 title: 如何玩转cf 分流优化
 published: 2025-11-14
-description: '关于如何玩cloudflare的分流ip优化~'
-tags: [优选ip]
-categories: 'cf优选'
+description: 关于如何玩cloudflare的分流ip优化~
+tags:
+  - 优选ip
+categories: cf优选
 draft: false
-lang: ''
-
+lang: ""
 ---
 
 # 视频教程
@@ -19,9 +19,9 @@ lang: ''
 
 2，你需要一个域名，可以用`免费域名`[👉戳我教你怎么注册](https://www.bilibili.com/video/BV1wwmdBjE1e)
 
-3，你最好要有一个海外的魔法`cloudflare有时候会上不去（）`
+3，你最好要有一个海外的魔法`cloudflare有时候会在加载仪表盘那里加载很久（）`
 
-4，有一个能接受短信的`邮箱`(qq、网易、谷歌、outlook……都可以)
+4，有一个能接收短信的`邮箱`(qq、网易、谷歌、outlook……都可以)
 
 5，有一个要部署的`项目`
 
@@ -29,11 +29,11 @@ lang: ''
 
 > [!TIP]
 > 
-> 可以是node.js、html……都可以
+>要部署的项目可以是node.js、html……都可以
 
 # 大概的流程
 
-### 部署一个cloudflare pages项目->添加cf默认给的💩解析->把默认的解析换成优选的
+### 部署一个cloudflare pages项目->添加cf默认给的💩解析->把默认的解析换成分流过后的
 
 # 讲几个问题
 
@@ -42,7 +42,7 @@ lang: ''
 答:因为这些的官方开始打击优选ip`（主要是不想讲vercel，Netlify）`，如eo现在一优选就报错`418我只是一个茶壶`，就连一些老的添加的也不能用了（）
 > [!TIP]
 > 
-> M4的Netfily限制积分（积分是部署时候要用的）本站经常部署，积分就没了`才一天就用完了`（78行为）
+> M4的Netfily限制积分，不知道为什么积分就没了`才一天就用完了`（78行为）
 
 `A:会不会很深奥啊`
 
@@ -112,6 +112,6 @@ cloudflare会给你一个XXX.pages.dev的域名和前缀，你要做的就是在
 
 我们可以在[itdog](https://www.itdog.cn/ping)验收成果
 
-![](https://lz.qaiu.top/parser?url=https://rtxvdz.lanzn.com/ifpDG3b5xihi&pwd=6666)
+![[chengguo.png]]
 
 嗯！~~`针不戳`！
