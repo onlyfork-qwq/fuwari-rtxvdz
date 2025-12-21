@@ -112,6 +112,6 @@ cloudflare会给你一个XXX.pages.dev的域名和前缀，你要做的就是在
 
 我们可以在[itdog](https://www.itdog.cn/ping)验收成果
 
-![[chengguo.png]]
+![](chengguo.png)
 
 嗯！~~`针不戳`！
