@@ -1,0 +1,329 @@
+<script>
+  import { onMount } from 'svelte';
+  
+  // 极验配置
+  const CAPTCHA_ID = "0d777c8c300ebee3bb39b98b9cc95b21";
+  
+  let captchaInstance = null;
+  let isVerified = false;
+  let isLoading = true;
+  let error = null;
+  
+  // 验证成功回调函数
+  export let onVerified = () => {};
+  
+  // 后端验证API地址（可选）
+  const VERIFY_API = '/api/verify-geetest'; // 如果你部署了后端API，可以启用这个
+  
+  // 初始化极验验证
+  function initGeetest() {
+    // 检查是否已经加载了极验脚本
+    if (typeof window.initGeetest4 === 'undefined') {
+      // 动态加载极验脚本
+      const script = document.createElement('script');
+      script.src = 'https://static.geetest.com/v4/gt4.js';
+      script.async = true;
+      script.onload = () => {
+        initializeCaptcha();
+      };
+      script.onerror = () => {
+        error = '无法加载极验验证脚本';
+        isLoading = false;
+      };
+      document.head.appendChild(script);
+    } else {
+      initializeCaptcha();
+    }
+  }
+  
+  function initializeCaptcha() {
+    try {
+      window.initGeetest4(
+        {
+          captchaId: CAPTCHA_ID,
+          product: 'bind',
+          language: 'zh',
+          nativeButton: {
+            width: '100%',
+            height: '40px',
+          },
+          riskType: 'slide', // 滑动验证
+          hideBar: ['close', 'refresh'], // 隐藏关闭和刷新按钮
+          mask: {
+            outside: true,
+            bgColor: '#0000004d'
+          }
+        },
+        (captchaObj) => {
+          captchaInstance = captchaObj;
+          
+          // 验证码准备就绪
+          captchaObj.onReady(() => {
+            isLoading = false;
+            console.log('极验验证码准备就绪');
+          });
+          
+          // 验证成功
+          captchaObj.onSuccess(async () => {
+            const result = captchaObj.getValidate();
+            if (result) {
+              console.log('验证成功:', result);
+              
+              // 可选：发送到后端验证
+              // await verifyWithBackend(result);
+              
+              isVerified = true;
+              
+              // 存储验证结果到localStorage
+              localStorage.setItem('geetest_verified', 'true');
+              localStorage.setItem('geetest_result', JSON.stringify(result));
+              localStorage.setItem('geetest_timestamp', Date.now().toString());
+              
+              // 触发验证成功事件
+              onVerified();
+            }
+          });
+          
+          // 验证失败
+          captchaObj.onError((err) => {
+            error = '验证失败，请重试';
+            console.error('极验验证错误:', err);
+          });
+          
+          // 验证关闭
+          captchaObj.onClose(() => {
+            console.log('验证窗口关闭');
+          });
+          
+          // 将验证码插入到指定元素
+          captchaObj.appendTo('#geetest-captcha-container');
+        }
+      );
+    } catch (err) {
+      error = '初始化验证码失败';
+      console.error('初始化极验失败:', err);
+      isLoading = false;
+    }
+  }
+  
+  // 手动显示验证码
+  function showCaptcha() {
+    if (captchaInstance && !isVerified) {
+      captchaInstance.showCaptcha();
+    }
+  }
+  
+  // 重置验证码
+  function resetCaptcha() {
+    if (captchaInstance) {
+      captchaInstance.reset();
+      isVerified = false;
+      localStorage.removeItem('geetest_verified');
+      localStorage.removeItem('geetest_result');
+      localStorage.removeItem('geetest_timestamp');
+    }
+  }
+  
+  // 后端验证函数（可选）
+  async function verifyWithBackend(result) {
+    try {
+      const response = await fetch(VERIFY_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(result),
+      });
+      
+      const data = await response.json();
+      
+      if (!data.success) {
+        console.error('后端验证失败:', data.error);
+        // 后端验证失败，可以重置验证码
+        if (captchaInstance) {
+          captchaInstance.reset();
+        }
+        isVerified = false;
+        error = '验证失败，请重试';
+        return false;
+      }
+      
+      console.log('后端验证成功:', data);
+      return true;
+    } catch (err) {
+      console.error('后端验证请求失败:', err);
+      // 网络错误时，仍然允许通过（避免阻塞用户）
+      return true;
+    }
+  }
+  
+  // 检查是否已经验证过（24小时内有效）
+  function checkPreviousVerification() {
+    const verified = localStorage.getItem('geetest_verified');
+    const timestamp = localStorage.getItem('geetest_timestamp');
+    
+    if (verified === 'true' && timestamp) {
+      const now = Date.now();
+      const verificationTime = parseInt(timestamp);
+      const hoursDiff = (now - verificationTime) / (1000 * 60 * 60);
+      
+      // 24小时内有效
+      if (hoursDiff < 24) {
+        isVerified = true;
+        const result = localStorage.getItem('geetest_result');
+        if (result) {
+          onVerified();
+        }
+        return true;
+      } else {
+        // 超过24小时，清除存储
+        localStorage.removeItem('geetest_verified');
+        localStorage.removeItem('geetest_result');
+        localStorage.removeItem('geetest_timestamp');
+      }
+    }
+    return false;
+  }
+  
+  onMount(() => {
+    // 先检查是否有有效的验证
+    if (!checkPreviousVerification()) {
+      initGeetest();
+    } else {
+      isLoading = false;
+    }
+  });
+</script>
+
+<div class="geetest-captcha-container">
+  {#if isLoading}
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>正在加载验证码...</p>
+    </div>
+  {:else if error}
+    <div class="error-container">
+      <p class="error-message">{error}</p>
+      <button on:click={initGeetest} class="retry-button">
+        重试
+      </button>
+    </div>
+  {:else if !isVerified}
+    <div class="verification-prompt">
+      <p>请先完成验证以显示评论</p>
+      <div id="geetest-captcha-container" class="captcha-wrapper"></div>
+      <button on:click={showCaptcha} class="show-captcha-button">
+        点击显示验证码
+      </button>
+    </div>
+  {:else}
+    <div class="verified-container">
+      <div class="success-message">
+        <svg class="success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+        <span>验证成功！评论已显示</span>
+      </div>
+      <button on:click={resetCaptcha} class="reset-button">
+        重新验证
+      </button>
+    </div>
+  {/if}
+</div>
+
+<style>
+  .geetest-captcha-container {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border-radius: var(--radius-large);
+    border: 1px solid var(--line-divider);
+  }
+  
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .error-container {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .error-message {
+    color: #ef4444;
+    margin-bottom: 1rem;
+  }
+  
+  .retry-button, .show-captcha-button, .reset-button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  
+  .retry-button:hover, .show-captcha-button:hover, .reset-button:hover {
+    opacity: 0.9;
+  }
+  
+  .verification-prompt {
+    text-align: center;
+  }
+  
+  .verification-prompt p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+  }
+  
+  .captcha-wrapper {
+    margin: 1rem 0;
+    min-height: 40px;
+  }
+  
+  .verified-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+  
+  .success-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #10b981;
+    font-weight: 500;
+  }
+  
+  .success-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .reset-button {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+  }
+</style>
