@@ -12,6 +12,11 @@
   // 验证成功回调函数
   export let onVerified = () => {};
   
+  // 验证成功后自动显示评论框的标志
+  export let autoShowComments = false;
+  export let commentsContainerId = 'giscus-container';
+  export let giscusConfig = {};
+  
   // 后端验证API地址（可选）
   const VERIFY_API = '/api/verify-geetest'; // 如果你部署了后端API，可以启用这个
   
@@ -81,6 +86,11 @@
               
               // 触发验证成功事件
               onVerified();
+              
+              // 如果设置了自动显示评论框，则加载评论
+              if (autoShowComments) {
+                loadComments();
+              }
             }
           });
           
@@ -110,17 +120,6 @@
   function showCaptcha() {
     if (captchaInstance && !isVerified) {
       captchaInstance.showCaptcha();
-    }
-  }
-  
-  // 重置验证码
-  function resetCaptcha() {
-    if (captchaInstance) {
-      captchaInstance.reset();
-      isVerified = false;
-      localStorage.removeItem('geetest_verified');
-      localStorage.removeItem('geetest_result');
-      localStorage.removeItem('geetest_timestamp');
     }
   }
   
@@ -173,6 +172,13 @@
         const result = localStorage.getItem('geetest_result');
         if (result) {
           onVerified();
+          // 如果设置了自动显示评论框，则加载评论
+          if (autoShowComments) {
+            // 使用setTimeout确保DOM已准备好
+            setTimeout(() => {
+              loadComments();
+            }, 100);
+          }
         }
         return true;
       } else {
@@ -183,6 +189,49 @@
       }
     }
     return false;
+  }
+  
+  // 加载评论框函数
+  function loadComments() {
+    const container = document.getElementById(commentsContainerId);
+    if (!container) {
+      console.error('评论容器未找到:', commentsContainerId);
+      return;
+    }
+    
+    // 清除可能已存在的评论框
+    container.innerHTML = '';
+    
+    // 创建Giscus脚本
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    
+    // 设置Giscus配置
+    const config = {
+      'data-repo': giscusConfig.repo || 'RTXVDZ/pinglun',
+      'data-repo-id': giscusConfig.repoId || 'R_kgDOQfRWyg',
+      'data-category': giscusConfig.category || 'Announcements',
+      'data-category-id': giscusConfig.categoryId || 'DIC_kwDOQfRWys4CzL22',
+      'data-mapping': giscusConfig.mapping || 'pathname',
+      'data-strict': '0',
+      'data-reactions-enabled': giscusConfig.reactionsEnabled !== false ? '1' : '0',
+      'data-emit-metadata': giscusConfig.emitMetadata ? '1' : '0',
+      'data-input-position': giscusConfig.inputPosition || 'bottom',
+      'data-theme': document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+      'data-lang': giscusConfig.lang || 'zh-CN',
+      'data-loading': 'lazy'
+    };
+    
+    // 设置所有属性
+    Object.entries(config).forEach(([key, value]) => {
+      script.setAttribute(key, value);
+    });
+    
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+    
+    container.appendChild(script);
+    console.log('评论框已加载');
   }
   
   onMount(() => {
@@ -224,9 +273,6 @@
         </svg>
         <span>验证成功！评论已显示</span>
       </div>
-      <button on:click={resetCaptcha} class="reset-button">
-        重新验证
-      </button>
     </div>
   {/if}
 </div>
@@ -272,7 +318,7 @@
     margin-bottom: 1rem;
   }
   
-  .retry-button, .show-captcha-button, .reset-button {
+  .retry-button, .show-captcha-button {
     background: var(--primary);
     color: white;
     border: none;
@@ -283,7 +329,7 @@
     transition: opacity 0.2s;
   }
   
-  .retry-button:hover, .show-captcha-button:hover, .reset-button:hover {
+  .retry-button:hover, .show-captcha-button:hover {
     opacity: 0.9;
   }
   
@@ -321,9 +367,5 @@
     height: 20px;
   }
   
-  .reset-button {
-    background: transparent;
-    color: var(--primary);
-    border: 1px solid var(--primary);
-  }
+
 </style>

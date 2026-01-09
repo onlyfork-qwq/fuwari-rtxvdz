@@ -29,33 +29,22 @@ const {
 <div id="giscus-container"></div>
 
 <!-- 极验验证组件 -->
-<GeetestCaptcha client:load onVerified={() => {
-  // 验证成功后加载Giscus
-  const container = document.getElementById('giscus-container');
-  if (!container) return;
-
-  const isDark = document.documentElement.classList.contains('dark');
-  const theme = isDark ? 'dark' : 'light';
-
-  const script = document.createElement('script');
-  script.src = 'https://giscus.app/client.js';
-  script.setAttribute('data-repo', repo);
-  script.setAttribute('data-repo-id', repoId);
-  script.setAttribute('data-category', category);
-  script.setAttribute('data-category-id', categoryId);
-  script.setAttribute('data-mapping', mapping);
-  script.setAttribute('data-strict', '0');
-  script.setAttribute('data-reactions-enabled', reactionsEnabled ? '1' : '0');
-  script.setAttribute('data-emit-metadata', emitMetadata ? '1' : '0');
-  script.setAttribute('data-input-position', inputPosition);
-  script.setAttribute('data-theme', theme);
-  script.setAttribute('data-lang', lang);
-  script.setAttribute('data-loading', 'lazy');
-  script.crossOrigin = 'anonymous';
-  script.async = true;
-
-  container.appendChild(script);
-}} />
+<GeetestCaptcha 
+  client:load 
+  autoShowComments={true}
+  commentsContainerId="giscus-container"
+  giscusConfig={{
+    repo,
+    repoId,
+    category,
+    categoryId,
+    mapping,
+    reactionsEnabled,
+    emitMetadata,
+    inputPosition,
+    lang
+  }}
+/>
 
 <script define:vars={{ repo, repoId, category, categoryId, mapping, reactionsEnabled, emitMetadata, inputPosition, lang }}>
   // 监听主题变化
