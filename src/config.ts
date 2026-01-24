@@ -26,25 +26,25 @@ export const siteConfig: SiteConfig = {
 			url: "https://lz.qaiu.top/parser?url=https://www.lanzout.com/iFvB63aq595e&pwd=6666", // (Optional) URL link to the original artwork or artist's page
 		},
 	},
-		background: {
-			enable: true, // Enable background image
-			src: "https://bing.img.run/rand.php", // Background image URL (supports HTTPS)
-			position: "center", // Background position: 'top', 'center', 'bottom'
-			size: "cover", // Background size: 'cover', 'contain', 'auto'
-			repeat: "no-repeat", // Background repeat: 'no-repeat', 'repeat', 'repeat-x', 'repeat-y'
-			attachment: "fixed", // Background attachment: 'fixed', 'scroll', 'local'
-			opacity: 0.9, // Background opacity (0-1)
+	background: {
+		enable: true, // Enable background image
+		src: "https://bing.img.run/rand.php", // Background image URL (supports HTTPS)
+		position: "center", // Background position: 'top', 'center', 'bottom'
+		size: "cover", // Background size: 'cover', 'contain', 'auto'
+		repeat: "no-repeat", // Background repeat: 'no-repeat', 'repeat', 'repeat-x', 'repeat-y'
+		attachment: "fixed", // Background attachment: 'fixed', 'scroll', 'local'
+		opacity: 0.9, // Background opacity (0-1)
 	},
 	toc: {
 		enable: true, // Display the table of contents on the right side of the post
 		depth: 2, // Maximum heading depth to show in the table, from 1 to 3
 	},
 	favicon: [
-		 {
-		   src: '/111.jpg',    // Path of the favicon, relative to the /public directory
-		   theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
-		   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
-		 }
+		{
+			src: "/111.jpg", // Path of the favicon, relative to the /public directory
+			theme: "light", // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
+			sizes: "32x32", // (Optional) Size of the favicon, set only if you have favicons of different sizes
+		},
 	],
 };
 
@@ -64,21 +64,21 @@ export const navBarConfig: NavBarConfig = {
 			external: false, // Show an external link icon and will open in a new tab
 		},
 		{
-			name: "腾讯云监控",
-			url: "https://eo.2fo.cc/", // Internal links should not include the base path, as it is automatically added
+			name: "服务监控",
+			url: "https://mon.2fo.cc/", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
 	],
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "/111.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-	name: "七天困一周",
-	bio: "关注B站“七天困一周”谢谢喵~",
+	avatar: "https://q2.qlogo.cn/headimg_dl?dst_uin=334063894&spec=0", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	name: "只会复制onlyfork",
+	bio: "青出于蓝而胜于蓝",
 	links: [
 		{
 			name: "bilibili",
-			icon: "fa6-brands:bilibili", 
+			icon: "fa6-brands:bilibili",
 			url: "https://b23.tv/slUca1M",
 		},
 		{
