@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cloudflare优选ip.md",
+                "file": "error.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "cloudflare优选ip"
+              "title": "error"
             }
           }
         ]
@@ -184,5 +184,12 @@
     }
   },
   "active": "2275ed29ce48c5d1",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "联系.md",
+    "cloudflare-site-up.md",
+    "error.md",
+    "free-domain.md",
+    "Untitled",
+    "chengguo.png"
+  ]
 }
