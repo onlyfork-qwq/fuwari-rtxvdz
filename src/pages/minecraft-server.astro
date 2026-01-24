@@ -1,7 +1,7 @@
 ---
-import MainGridLayout from "../layouts/MainGridLayout.astro";
-import GiscusWithCaptcha from "../components/misc/GiscusWithCaptcha.astro";
 import { Icon } from "astro-icon/components";
+import GiscusWithCaptcha from "../components/misc/GiscusWithCaptcha.astro";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
 ---
 <MainGridLayout title="我的世界服务器" description="我的世界服务器介绍">
     <!-- 服务器介绍卡片 -->
@@ -13,11 +13,11 @@ import { Icon } from "astro-icon/components";
             </div>
             <div class="text-neutral-300 leading-relaxed space-y-4">
                 <p>欢迎来到我们的我的世界服务器！这里是一个充满乐趣和创意的社区，致力于为玩家提供最佳的游戏体验。</p>
-                <p>我们提供多种游戏模式，包括生存、创造、小游戏等，无论你是喜欢冒险的探险家，还是喜欢建筑的创造者，都能在这里找到属于自己的乐趣。</p>
+                <p>我们是纯生村服，有加个简单的语音聊天，方便玩家之间的交流</p>
                 <div class="flex items-center gap-2 mt-4">
                     <span class="px-3 py-1 rounded-full bg-[var(--primary)]/20 text-[var(--primary)] text-sm font-medium">稳定运行</span>
-                    <span class="px-3 py-1 rounded-full bg-[var(--primary)]/20 text-[var(--primary)] text-sm font-medium">友好社区</span>
-                    <span class="px-3 py-1 rounded-full bg-[var(--primary)]/20 text-[var(--primary)] text-sm font-medium">定期活动</span>
+                    <span class="px-3 py-1 rounded-full bg-[var(--primary)]/20 text-[var(--primary)] text-sm font-medium">友好氛围</span>
+                    <span class="px-3 py-1 rounded-full bg-[var(--primary)]/20 text-[var(--primary)] text-sm font-medium">打击外挂</span>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@ import { Icon } from "astro-icon/components";
                         <Icon name="material-symbols:speed" class="text-[1.5rem] mr-2 text-[var(--primary)]" />
                         <h3 class="text-lg font-bold">低延迟高性能</h3>
                     </div>
-                    <p class="text-neutral-400 text-sm">采用优质服务器配置，确保流畅的游戏体验，告别卡顿和掉线。</p>
+                    <p class="text-neutral-400 text-sm">采用橡木云服务器，8h8g配置，bgp网络至强8259cl处理器，告别卡顿和掉线。</p>
                 </div>
                 <div class="p-4 rounded-lg bg-[var(--card-bg)]/50 border border-[var(--primary)]/20">
                     <div class="flex items-center mb-3">
@@ -48,9 +48,9 @@ import { Icon } from "astro-icon/components";
                 <div class="p-4 rounded-lg bg-[var(--card-bg)]/50 border border-[var(--primary)]/20">
                     <div class="flex items-center mb-3">
                         <Icon name="material-symbols:celebration" class="text-[1.5rem] mr-2 text-[var(--primary)]" />
-                        <h3 class="text-lg font-bold">丰富活动</h3>
+                        <h3 class="text-lg font-bold">友好氛围</h3>
                     </div>
-                    <p class="text-neutral-400 text-sm">定期举办建筑大赛、PVP竞技、节日庆典等活动，让游戏更有趣。</p>
+                    <p class="text-neutral-400 text-sm">管理员定期打击外挂和整治玩家不良行为</p>
                 </div>
                 <div class="p-4 rounded-lg bg-[var(--card-bg)]/50 border border-[var(--primary)]/20">
                     <div class="flex items-center mb-3">
@@ -75,7 +75,7 @@ import { Icon } from "astro-icon/components";
                     <p class="mb-2">想要加入我们的服务器？快来加入QQ群吧！</p>
                     <p class="text-sm text-neutral-400">在这里你可以获取服务器地址、最新动态，还能和其他玩家交流互动。</p>
                 </div>
-                <a href="https://qm.qq.com/q/57Jx7nqmeY" target="_blank" rel="noopener noreferrer" 
+                <a href="https://qm.qq.com/q/u6Ba3OJuik" target="_blank" rel="noopener noreferrer" 
                    class="btn-regular px-8 py-3 rounded-lg bg-[var(--primary)] hover:bg-[var(--primary)]/90 active:scale-95 flex items-center gap-2 text-white font-bold transition">
                     <Icon name="fa6-brands:qq" class="text-[1.25rem]" />
                     点击加入QQ群
@@ -89,7 +89,7 @@ import { Icon } from "astro-icon/components";
         <div class="card-base z-10 px-6 md:px-9 py-6 relative w-full">
             <div class="flex items-center mb-6">
                 <Icon name="material-symbols:chat" class="text-[2rem] mr-3 text-[var(--primary)]" />
-                <h2 class="text-2xl font-bold">评论区</h2>
+                <h2 class="text-2xl font-bold">建议与改进</h2>
             </div>
             <GiscusWithCaptcha
                 repo="RTXVDZ/pinglun"
