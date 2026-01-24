@@ -1,12 +1,11 @@
 ---
 title: 记录博客以及其他东西的故障
-image:
 published: 2026-01-24
 order: 1
 category: 置顶
 tags:
   - 联系
-description:
+description: 关于我的各个东西的状态说明
 ---
 # 服务状态查看
 可以在[mon.2fo.cc](mon.2fo.cc)这个网站查看，此文章仅记录错误以及不正常的状态
