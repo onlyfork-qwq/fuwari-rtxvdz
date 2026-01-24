@@ -1,8 +1,9 @@
 {
-  "version": 2,
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/dm", "dest": "/posts/free-domain/", "status": 301 },
-    { "src": "/(.*)", "status": 404, "dest": "/404.html" }
-  ]
+	"version": 2,
+	"routes": [
+		{ "handle": "filesystem" },
+		{ "src": "/dm", "dest": "/posts/free-domain/", "status": 301 },
+		{ "src": "/mc", "dest": "/minecraft-server", "status": 301 },
+		{ "src": "/(.*)", "status": 404, "dest": "/404.html" }
+	]
 }
