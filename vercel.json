@@ -9,6 +9,7 @@
 			"dest": "https://www.mcmod.cn/class/3693.html",
 			"status": 301
 		},
+		{ "src": "/tk", "dest": "/posts/onlyfork-tk/", "status": 301 },
 		{ "src": "/(.*)", "status": 404, "dest": "/404.html" }
 	]
 }
