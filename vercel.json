@@ -11,6 +11,11 @@
 		},
 		{ "src": "/tk", "dest": "/posts/onlyfork-tk/", "status": 301 },
 		{ "src": "/fq", "dest": "https://qm.qq.com/q/BNMUQQnqV4", "status": 301 },
+		{
+			"src": "/zy",
+			"dest": "https://gh-proxy.com/https://github.com/ZombieStriker/QualityArmory-Resourcepack/releases/download/latest/QualityArmory-21.zip",
+			"status": 301
+		},
 		{ "src": "/(.*)", "status": 404, "dest": "/404.html" }
 	]
 }
