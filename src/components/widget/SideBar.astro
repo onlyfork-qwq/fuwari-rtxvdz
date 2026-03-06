@@ -10,10 +10,10 @@ interface Props {
 
 const className = Astro.props.class;
 ---
-<UmamiStats class="onload-animation" style="animation-delay: 200ms"></UmamiStats>
 <div id="sidebar" class:list={[className, "w-full"]}>
     <div class="flex flex-col w-full gap-4 mb-4">
         <Profile></Profile>
+        <UmamiStats class="onload-animation" style="animation-delay: 200ms"></UmamiStats>
         <div class="card-base p-4 rounded-[var(--radius-large)] transition bg-[var(--card-bg)]">
             <h3 class="font-bold text-lg mb-3 text-neutral-900 dark:text-neutral-100 transition relative ml-3
                 before:w-1 before:h-4 before:rounded-md before:bg-[var(--primary)]
