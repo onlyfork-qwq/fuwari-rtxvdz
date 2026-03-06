@@ -14,26 +14,181 @@ const currentYear = new Date().getFullYear();
         &copy; <span id="copyright-year">{currentYear}</span> {profileConfig.name}. 版权所有
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>
-        语言：
+        主题语言:
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a>
-        上游
+        上游仓库:
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
+        <br>
+        本站代码
+        <a class="transition link text-[var(--primary)] font-medium cursor-pointer" id="source-link">已开源</a>
         <br>
         本站由
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://vercel.com">vercel</a>
         &
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://www.huaweicloud.com/">huawei cloud</a>
         &
-        <a class="transition link text-[var(--primary)] font-medium inline-flex items-center" href="https://idc.xmgod.site/aff/BPBABFOX" target="_blank"><img alt="" src="https://idc.xmgod.site/upload/logo.png" class="h-4 mr-1">橡木云cdn</a>
+        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://www.xmyvps.cn/">香么云</a>
         强力驱动
         <br />
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://icp.gov.moe/?keyword=20251216">萌ICP备20251216号</a>
         <br />
-        本站大部分主题或页面代码来自于
+        本站部分代码使用
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://blog.acofork.com">B站二叉树树</a>
         和
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://fuwari.oh1.top">yCENzh</a>
-        感谢大佬的代码！
+        的代码感谢大佬的代码！
         <br/>
     </div>
 </div>
+
+<!-- 弹窗样式（全局） -->
+<style is:global>
+    @keyframes modalFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes modalSlideIn {
+        from { opacity: 0; transform: scale(0.9) translateY(-20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes modalFadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+    @keyframes modalSlideOut {
+        from { opacity: 1; transform: scale(1) translateY(0); }
+        to { opacity: 0; transform: scale(0.9) translateY(-20px); }
+    }
+</style>
+
+<!-- 弹窗脚本 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sourceLink = document.getElementById('source-link');
+
+        if (sourceLink) {
+            sourceLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showModal();
+            });
+        }
+    });
+
+    function showModal() {
+        const overlay = document.createElement('div');
+        overlay.id = 'source-modal';
+        overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: background 0.3s ease;';
+
+        const box = document.createElement('div');
+        box.style.cssText = 'background: var(--card-bg, #fff); border-radius: 12px; padding: 24px; max-width: 400px; width: 90%; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); opacity: 0; transform: scale(0.9) translateY(-20px); transition: all 0.3s ease;';
+
+        box.innerHTML = `
+            <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px; color: var(--text-primary, #333);">克隆本站源代码需要有一定的编程基础，没基础就最好别克隆了</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button data-action="go" style="padding: 10px 16px; border-radius: 8px; border: 1px solid var(--primary, #6366f1); background: transparent; color: var(--primary, #6366f1); cursor: pointer; transition: all 0.2s ease;">1. 我有编程基础</button>
+                <button data-action="other" style="padding: 10px 16px; border-radius: 8px; border: 1px solid var(--primary, #6366f1); background: transparent; color: var(--primary, #6366f1); cursor: pointer; transition: all 0.2s ease;">2. 没有编程基础</button>
+                <button data-action="other" style="padding: 10px 16px; border-radius: 8px; border: 1px solid var(--primary, #6366f1); background: transparent; color: var(--primary, #6366f1); cursor: pointer; transition: all 0.2s ease;">3. 你过关</button>
+                <button data-action="other" style="padding: 10px 16px; border-radius: 8px; border: 1px solid var(--primary, #6366f1); background: transparent; color: var(--primary, #6366f1); cursor: pointer; transition: all 0.2s ease;">4. 7891</button>
+                <button data-action="other" style="padding: 10px 16px; border-radius: 8px; border: 1px solid var(--primary, #6366f1); background: transparent; color: var(--primary, #6366f1); cursor: pointer; transition: all 0.2s ease;">5. 好吃</button>
+                <button data-action="other" style="padding: 10px 16px; border-radius: 8px; border: 1px solid var(--primary, #6366f1); background: transparent; color: var(--primary, #6366f1); cursor: pointer; transition: all 0.2s ease;">6. 迷你世界最好玩了</button>
+            </div>
+            <button data-action="close" style="margin-top: 16px; padding: 8px 16px; border-radius: 8px; border: none; background: #666; color: #fff; cursor: pointer; width: 100%; transition: all 0.2s ease;">关闭</button>
+        `;
+
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        // 触发动画
+        requestAnimationFrame(() => {
+            overlay.style.background = 'rgba(0, 0, 0, 0.6)';
+            box.style.opacity = '1';
+            box.style.transform = 'scale(1) translateY(0)';
+        });
+
+        overlay.addEventListener('click', function(e) {
+            const action = e.target.dataset.action;
+            if (action === 'go') {
+                closeModalWithAnimation(overlay, () => {
+                    showJumpModal();
+                });
+            } else if (action === 'other') {
+                closeModalWithAnimation(overlay, () => {
+                    showNoJumpModal();
+                });
+            } else if (action === 'close' || e.target === overlay) {
+                closeModalWithAnimation(overlay);
+            }
+        });
+    }
+
+    function showJumpModal() {
+        const overlay = document.createElement('div');
+        overlay.id = 'jump-modal';
+        overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: background 0.3s ease;';
+
+        const box = document.createElement('div');
+        box.style.cssText = 'background: var(--card-bg, #fff); border-radius: 12px; padding: 24px; max-width: 400px; width: 90%; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); text-align: center; opacity: 0; transform: scale(0.9) translateY(-20px); transition: all 0.3s ease;';
+
+        box.innerHTML = `
+            <div style="font-size: 1.2rem; font-weight: 600; color: var(--primary, #6366f1);">即将跳转...</div>
+        `;
+
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        requestAnimationFrame(() => {
+            overlay.style.background = 'rgba(0, 0, 0, 0.6)';
+            box.style.opacity = '1';
+            box.style.transform = 'scale(1) translateY(0)';
+        });
+
+        setTimeout(() => {
+            closeModalWithAnimation(overlay, () => {
+                window.open('https://github.com/RTXVDZ/fuwari-rtxvdz', '_blank');
+            });
+        }, 800);
+    }
+
+    function showNoJumpModal() {
+        const overlay = document.createElement('div');
+        overlay.id = 'nojump-modal';
+        overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); display: flex; align-items: center; justify-content: center; z-index: 9999; transition: background 0.3s ease;';
+
+        const box = document.createElement('div');
+        box.style.cssText = 'background: var(--card-bg, #fff); border-radius: 12px; padding: 24px; max-width: 400px; width: 90%; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); text-align: center; opacity: 0; transform: scale(0.9) translateY(-20px); transition: all 0.3s ease;';
+
+        box.innerHTML = `
+            <div style="font-size: 1.2rem; font-weight: 600; color: #e74c3c; margin-bottom: 16px;">这个按钮不跳转力！</div>
+            <button data-action="close" style="padding: 10px 24px; border-radius: 8px; border: none; background: var(--primary, #6366f1); color: #fff; cursor: pointer; transition: all 0.2s ease;">确定</button>
+        `;
+
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        requestAnimationFrame(() => {
+            overlay.style.background = 'rgba(0, 0, 0, 0.6)';
+            box.style.opacity = '1';
+            box.style.transform = 'scale(1) translateY(0)';
+        });
+
+        overlay.addEventListener('click', function(e) {
+            if (e.target.dataset.action === 'close' || e.target === overlay) {
+                closeModalWithAnimation(overlay);
+            }
+        });
+    }
+
+    function closeModalWithAnimation(overlay, callback) {
+        const box = overlay.querySelector('div');
+        if (box) {
+            box.style.opacity = '0';
+            box.style.transform = 'scale(0.9) translateY(-20px)';
+        }
+        overlay.style.background = 'rgba(0, 0, 0, 0)';
+
+        setTimeout(() => {
+            overlay.remove();
+            if (callback) callback();
+        }, 300);
+    }
+</script>
