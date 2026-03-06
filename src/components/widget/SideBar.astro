@@ -1,6 +1,7 @@
 ---
 import type { MarkdownHeading } from "astro";
 import Profile from "./Profile.astro";
+import UmamiStats from "./UmamiStats.astro";
 
 interface Props {
 	class?: string;
@@ -9,6 +10,7 @@ interface Props {
 
 const className = Astro.props.class;
 ---
+<UmamiStats class="onload-animation" style="animation-delay: 200ms"></UmamiStats>
 <div id="sidebar" class:list={[className, "w-full"]}>
     <div class="flex flex-col w-full gap-4 mb-4">
         <Profile></Profile>
