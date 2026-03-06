@@ -1,20 +1,14 @@
 [
-  {
-    "name": "mpss我的世界服务器",
-    "icon": "https://lz.qaiu.top/parser?url=https://rtxvdz.lanzn.com/iajVQ3chyd9e&pwd=6666",
-    "description": "欢迎游玩喵~",
-    "url": "https://svmpss.top"
-  },
-  {
-    "name": "橡木云",
-    "icon": "https://lz.qaiu.top/parser?url=https://rtxvdz.lanzn.com/iJyMu3chydgb&pwd=6666",
-    "description": "超超超……级便宜的服务器，品质有保障！",
-    "url": "https://idc.xmgod.site/"
-  },
-  {
-    "name": "yCENzh",
-    "icon": "https://lz.qaiu.top/parser?url=https://rtxvdz.lanzn.com/iPJpi3chydch&pwd=6666",
-    "description": "爱你所爱！",
-    "url": "https://fuwari.oh1.top/"
-  }
+	{
+		"name": "橡木云",
+		"icon": "https://www.xmyvps.cn/upload/logo.png",
+		"description": "超超超……便宜的服务器，品质有保障！(我自己也在用)",
+		"url": "https://www.xmyvps.cn"
+	},
+	{
+		"name": "yCENzh",
+		"icon": "https://lz.qaiu.top/parser?url=https://rtxvdz.lanzn.com/iPJpi3chydch&pwd=6666",
+		"description": "爱你所爱！",
+		"url": "https://fuwari.oh1.top/"
+	}
 ]
