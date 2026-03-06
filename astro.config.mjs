@@ -29,6 +29,11 @@ export default defineConfig({
 	site: "https://b.2fo.cc/",
 	base: "/",
 	trailingSlash: "always",
+	image: {
+		service: {
+			entrypoint: 'astro/assets/services/noop'
+		}
+	},
 	integrations: [
 		tailwind({
 			nesting: true,
