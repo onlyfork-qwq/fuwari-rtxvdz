@@ -8,31 +8,54 @@ const friends = friendsData;
 ---
 <MainGridLayout title="友链" description="友链">
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
-        <div class="card-base z-10 px-9 py-6 relative w-full ">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8 my-4">
-                {friends.map((friend) => (
-                    <div class="flex flex-nowrap items-stretch h-28 gap-4 rounded-[var(--radius-large)]">
-                        <div class="w-28 h-28 flex-shrink-0 rounded-lg overflow-hidden bg-zinc-200 dark:bg-zinc-900">
-                            <img src={friend.icon} alt={`${friend.name}的头像`} class="w-full h-full object-cover">
-                        </div>
-                        <div class="grow w-full">
-                            <div class="font-bold transition text-lg text-neutral-900 dark:text-neutral-100 mb-1">{friend.name}</div>
-                            <div class="text-50 text-sm font-medium">{friend.description}</div>
-                        </div>
-                        <a href={friend.url} target="_blank" rel="noopener noreferrer" class="flex btn-regular w-[3.25rem] rounded-lg bg-[var(--enter-btn-bg)] hover:bg-[var(--enter-btn-bg-hover)] active:bg-[var(--enter-btn-bg-active)] active:scale-95">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="transition text-[var(--primary)] text-4xl mx-auto iconify iconify--material-symbols" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M12.6 12L8.7 8.1q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.6 4.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.6 4.6q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7z"></path>
+        <div class="card-base z-10 px-6 md:px-9 py-6 relative w-full">
+            <!-- 标题区域 -->
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">👥</span>
+                    <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">友链</h1>
+                </div>
+                <span class="px-3 py-1 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-sm font-medium">
+                    👥 {friends.length}
+                </span>
+            </div>
+            <p class="text-neutral-500 dark:text-neutral-400 mb-6">遇见更多有趣的小伙伴</p>
+
+            <!-- 友链卡片网格 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {friends.map((friend, index) => (
+                    <a href={friend.url} target="_blank" rel="noopener noreferrer"
+                       class="group block p-4 rounded-xl bg-neutral-50 dark:bg-neutral-800/50 hover:bg-white dark:hover:bg-neutral-800 hover:shadow-lg hover:shadow-neutral-200/50 dark:hover:shadow-neutral-900/50 hover:-translate-y-1 transition-all duration-300 ease-out"
+                       style={`animation: fadeInUp 0.5s ease-out ${index * 0.05}s both`}>
+                        <div class="flex items-center gap-3">
+                            <!-- 头像 -->
+                            <div class="w-12 h-12 rounded-full overflow-hidden bg-neutral-200 dark:bg-neutral-700 flex-shrink-0 ring-2 ring-transparent group-hover:ring-[var(--primary)]/30 transition-all duration-300">
+                                <img src={friend.icon} alt={`${friend.name}的头像`} class="w-full h-full object-cover">
+                            </div>
+                            <!-- 信息 -->
+                            <div class="flex-1 min-w-0">
+                                <div class="font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-[var(--primary)] transition-colors duration-300 truncate">
+                                    {friend.name}
+                                </div>
+                                <div class="text-sm text-neutral-500 dark:text-neutral-400 truncate">
+                                    {friend.description}
+                                </div>
+                            </div>
+                            <!-- 箭头 -->
+                            <svg class="w-5 h-5 text-neutral-300 dark:text-neutral-600 group-hover:text-[var(--primary)] group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6L6 6M6 6L6 10M6 6L14 14M18 18L18 14M18 18L14 18M18 18L10 10"/>
                             </svg>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 ))}
             </div>
+
             <div class="mt-8 text-center">
-                <p class="text-sm text-neutral-600 dark:text-neutral-400">你也想上榜？可以评论哦~或者提Pr</p>
+                <p class="text-sm text-neutral-500 dark:text-neutral-400">你也想上榜？可以评论哦~或者提Pr</p>
             </div>
         </div>
     </div>
-    
+
     <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative mt-4">
         <div class="card-base z-10 px-6 md:px-9 py-6 relative w-full">
              <GiscusWithCaptcha
@@ -45,3 +68,16 @@ const friends = friendsData;
         </div>
     </div>
 </MainGridLayout>
+
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
