@@ -2,6 +2,7 @@
 import GiscusWithCaptcha from "../components/misc/GiscusWithCaptcha.astro";
 import friendsData from "../config/friends.json";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
+import { Icon } from "astro-icon/components";
 
 // 从JSON文件加载友链数据
 const friends = friendsData;
@@ -12,11 +13,12 @@ const friends = friendsData;
             <!-- 标题区域 -->
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-2">
-                    <span class="text-2xl">👥</span>
+                    <Icon name="material-symbols:diversity-3" class="text-2xl text-[var(--primary)]" />
                     <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">友链</h1>
                 </div>
-                <span class="px-3 py-1 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-sm font-medium">
-                    👥 {friends.length}
+                <span class="px-3 py-1 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-sm font-medium flex items-center gap-1">
+                    <Icon name="material-symbols:group-rounded" class="text-base" />
+                    {friends.length}
                 </span>
             </div>
             <p class="text-neutral-500 dark:text-neutral-400 mb-6">遇见更多有趣的小伙伴</p>
@@ -41,9 +43,11 @@ const friends = friendsData;
                                     {friend.description}
                                 </div>
                             </div>
-                            <!-- 箭头 -->
-                            <svg class="w-5 h-5 text-neutral-300 dark:text-neutral-600 group-hover:text-[var(--primary)] group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6L6 6M6 6L6 10M6 6L14 14M18 18L18 14M18 18L14 18M18 18L10 10"/>
+                            <!-- 外链图标 -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-300 dark:text-neutral-600 group-hover:text-[var(--primary)] transition-colors duration-300 flex-shrink-0">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
                         </div>
                     </a>
