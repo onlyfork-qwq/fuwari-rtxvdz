@@ -1,4 +1,5 @@
 import type {
+	AnnouncementConfig,
 	ExpressiveCodeConfig,
 	LicenseConfig,
 	NavBarConfig,
@@ -55,12 +56,12 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.About,
 		{
 			name: "我的世界服务器",
-			url: "/minecraft-server", // Internal links should not include the base path, as it is automatically added
+			url: "/minecraft-server/", // Internal links should not include the base path, as it is automatically added
 			external: false, // Show an external link icon and will open in a new tab
 		},
 		{
 			name: "友链",
-			url: "/friends", // Internal links should not include the base path, as it is automatically added
+			url: "/friends/", // Internal links should not include the base path, as it is automatically added
 			external: false, // Show an external link icon and will open in a new tab
 		},
 		{
@@ -104,4 +105,9 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color
 	theme: "github-dark",
+};
+
+export const announcementConfig: AnnouncementConfig = {
+	enable: true,
+	text: "博客功能ui大改以后每周会写两篇文章（应该）bushi~",
 };

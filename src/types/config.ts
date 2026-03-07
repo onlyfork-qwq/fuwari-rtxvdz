@@ -1,25 +1,25 @@
-import type { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants";
-
-export type SiteConfig = {
-	title: string;
-	subtitle: string;
-
-	lang:
-		| "en"
-		| "zh_CN"
-		| "zh_TW"
-		| "ja"
-		| "ko"
-		| "es"
-		| "th"
-		| "vi"
-		| "tr"
-		| "id";
-
-	themeColor: {
-		hue: number;
-		fixed: boolean;
-		forceDarkMode: boolean;
+import type { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants";
+
+export type SiteConfig = {
+	title: string;
+	subtitle: string;
+
+	lang:
+		| "en"
+		| "zh_CN"
+		| "zh_TW"
+		| "ja"
+		| "ko"
+		| "es"
+		| "th"
+		| "vi"
+		| "tr"
+		| "id";
+
+	themeColor: {
+		hue: number;
+		fixed: boolean;
+		forceDarkMode: boolean;
 	};
 	banner: {
 		enable: boolean;
@@ -126,4 +126,9 @@ export type BlogPostData = {
 
 export type ExpressiveCodeConfig = {
 	theme: string;
+};
+
+export type AnnouncementConfig = {
+	enable: boolean;
+	text: string;
 };

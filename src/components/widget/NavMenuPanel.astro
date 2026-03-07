@@ -11,12 +11,13 @@ const links = Astro.props.links;
 ---
 <div id="nav-menu-panel" class:list={["float-panel float-panel-closed absolute transition-all fixed right-4 px-2 py-2"]}>
     {links.map((link) => (
-        <a href={link.external ? link.url : url(link.url)} class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
-            hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition
-        "
+        <a href={link.external ? link.url : url(link.url)} 
+           class="group flex justify-between items-center py-2 pl-3 pr-1 rounded-lg gap-8
+               hover:bg-[var(--btn-plain-bg-hover)] active:bg-[var(--btn-plain-bg-active)] transition nav-menu-link"
+           data-link-url={link.external ? "" : link.url}
            target={link.external ? "_blank" : null}
         >
-            <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)]">
+            <div class="transition text-black/75 dark:text-white/75 font-bold group-hover:text-[var(--primary)] group-active:text-[var(--primary)] nav-menu-text">
                 {link.name}
             </div>
             {!link.external && <Icon name="material-symbols:chevron-right-rounded"
@@ -30,3 +31,50 @@ const links = Astro.props.links;
         </a>
     ))}
 </div>
+
+<style>
+    .nav-menu-link.nav-menu-active {
+        background: rgba(var(--primary-rgb, 99, 102, 241), 0.1);
+        border: 2px solid var(--primary);
+    }
+    .nav-menu-link.nav-menu-active .nav-menu-text {
+        color: var(--primary) !important;
+    }
+</style>
+
+<script define:vars={{ links: links.map(l => ({ name: l.name, url: l.external ? null : l.url, external: l.external })) }}>
+// 高亮当前页面的移动端导航链接
+function highlightCurrentNavMenu() {
+    const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    const menuLinks = document.querySelectorAll('.nav-menu-link');
+    
+    menuLinks.forEach(link => {
+        const linkUrl = link.getAttribute('data-link-url');
+        if (linkUrl !== null) {
+            const normalizedLinkUrl = linkUrl.replace(/\/$/, '') || '/';
+            
+            if (normalizedLinkUrl === currentPath) {
+                link.classList.add('nav-menu-active');
+            } else {
+                link.classList.remove('nav-menu-active');
+            }
+        }
+    });
+}
+
+// 初始加载
+document.addEventListener('DOMContentLoaded', highlightCurrentNavMenu);
+
+// swup 页面切换后更新
+const setupSwupHighlight = () => {
+    if (window.swup && window.swup.hooks) {
+        window.swup.hooks.on('page:view', highlightCurrentNavMenu);
+    }
+};
+
+if (window.swup) {
+    setupSwupHighlight();
+} else {
+    document.addEventListener('swup:enable', setupSwupHighlight);
+}
+</script>

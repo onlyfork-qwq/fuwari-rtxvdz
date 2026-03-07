@@ -60,6 +60,8 @@ export default defineConfig({
 				"fa6-solid": ["*"],
 				"material-symbols": ["*"],
 				"simple-icons": ["astro", "vercel"],
+				"devicon": ["vercel-wordmark"],
+				"logos": ["vercel"],
 			},
 		}),
 		expressiveCode({

@@ -17,9 +17,6 @@
   export let commentsContainerId = 'giscus-container';
   export let giscusConfig = {};
   
-  // 后端验证API地址（可选）
-  const VERIFY_API = '/api/verify-geetest'; // 如果你部署了后端API，可以启用这个
-  
   // 初始化极验验证
   function initGeetest() {
     // 检查是否已经加载了极验脚本
@@ -74,15 +71,7 @@
             if (result) {
               console.log('验证成功:', result);
               
-              // 可选：发送到后端验证
-              // await verifyWithBackend(result);
-              
               isVerified = true;
-              
-              // 存储验证结果到localStorage
-              localStorage.setItem('geetest_verified', 'true');
-              localStorage.setItem('geetest_result', JSON.stringify(result));
-              localStorage.setItem('geetest_timestamp', Date.now().toString());
               
               // 触发验证成功事件
               onVerified();
@@ -123,72 +112,12 @@
     }
   }
   
-  // 后端验证函数（可选）
-  async function verifyWithBackend(result) {
-    try {
-      const response = await fetch(VERIFY_API, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(result),
-      });
-      
-      const data = await response.json();
-      
-      if (!data.success) {
-        console.error('后端验证失败:', data.error);
-        // 后端验证失败，可以重置验证码
-        if (captchaInstance) {
-          captchaInstance.reset();
-        }
-        isVerified = false;
-        error = '验证失败，请重试';
-        return false;
-      }
-      
-      console.log('后端验证成功:', data);
-      return true;
-    } catch (err) {
-      console.error('后端验证请求失败:', err);
-      // 网络错误时，仍然允许通过（避免阻塞用户）
-      return true;
+  // 重置验证状态
+  function resetVerification() {
+    isVerified = false;
+    if (captchaInstance) {
+      captchaInstance.reset();
     }
-  }
-  
-  // 检查是否已经验证过（24小时内有效）
-  function checkPreviousVerification() {
-    const verified = localStorage.getItem('geetest_verified');
-    const timestamp = localStorage.getItem('geetest_timestamp');
-    
-    if (verified === 'true' && timestamp) {
-      const now = Date.now();
-      const verificationTime = parseInt(timestamp);
-      const hoursDiff = (now - verificationTime) / (1000 * 60 * 60);
-      
-      // 24小时内有效
-      if (hoursDiff < 24) {
-        isVerified = true;
-        const result = localStorage.getItem('geetest_result');
-        if (result) {
-          onVerified();
-          // 如果设置了自动显示评论框，则加载评论
-          if (autoShowComments) {
-            // 使用setTimeout确保DOM已准备好
-            setTimeout(() => {
-              loadComments();
-            }, 100);
-          }
-        }
-        return true;
-      } else {
-        // 超过24小时，清除存储
-        localStorage.removeItem('geetest_verified');
-        localStorage.removeItem('geetest_result');
-        localStorage.removeItem('geetest_timestamp');
-      }
-    }
-    return false;
   }
   
   // 加载评论框函数
@@ -235,12 +164,20 @@
   }
   
   onMount(() => {
-    // 先检查是否有有效的验证
-    if (!checkPreviousVerification()) {
-      initGeetest();
-    } else {
-      isLoading = false;
-    }
+    initGeetest();
+    
+    // 监听页面可见性变化，离开页面后重置验证状态
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && isVerified) {
+        // 页面重新可见时重置验证状态
+        resetVerification();
+        // 清除评论框
+        const container = document.getElementById(commentsContainerId);
+        if (container) {
+          container.innerHTML = '';
+        }
+      }
+    });
   });
 </script>
 

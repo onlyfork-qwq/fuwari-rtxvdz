@@ -1,5 +1,6 @@
 ---
 
+import { Icon } from "astro-icon/components";
 import { profileConfig } from "../config";
 import { url } from "../utils/url-utils";
 
@@ -18,17 +19,13 @@ const currentYear = new Date().getFullYear();
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a>
         上游仓库:
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>
-        <br>
         本站代码
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/RTXVDZ/fuwari-rtxvdz">已开源</a>
-        <br>
-        本站由
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://vercel.com">vercel</a>
-        &
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://www.huaweicloud.com/">huawei cloud</a>
-        &
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://www.xmyvps.cn/">香么云</a>
-        强力驱动
+        <br />
+        EdgeHost
+        <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">
+            <img src="/vercel.png" alt="Vercel" class="inline-block h-4 align-text-bottom ml-1 hover:opacity-80 transition-opacity cursor-pointer" />
+        </a>
         <br />
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://icp.gov.moe/?keyword=20251216">萌ICP备20251216号</a>
         <br />
@@ -38,5 +35,49 @@ const currentYear = new Date().getFullYear();
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://fuwari.oh1.top">yCENzh</a>
         的代码感谢大佬的代码！
         <br/>
+        本站已运行 <span id="run-time"></span>
     </div>
 </div>
+
+<script>
+function updateRunTime() {
+    const startDate = new Date('2025-11-03');
+    const now = new Date();
+    
+    let years = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth() - startDate.getMonth();
+    let days = now.getDate() - startDate.getDate();
+    
+    if (days < 0) {
+        months--;
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+    }
+    
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+    
+    const runTimeEl = document.getElementById('run-time');
+    if (runTimeEl) {
+        runTimeEl.textContent = `${years}年${months}月${days}天`;
+    }
+}
+
+// 初始加载
+updateRunTime();
+
+// swup页面切换后重新执行
+const setupSwupRunTime = () => {
+    if (window.swup && window.swup.hooks) {
+        window.swup.hooks.on('page:view', updateRunTime);
+    }
+};
+
+if (window.swup) {
+    setupSwupRunTime();
+} else {
+    document.addEventListener('swup:enable', setupSwupRunTime);
+}
+</script>

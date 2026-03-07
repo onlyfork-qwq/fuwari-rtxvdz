@@ -31,10 +31,13 @@ let links: NavBarLink[] = navBarConfig.links.map(
                 {siteConfig.title}
             </div>
         </a>
-        <div class="hidden md:flex">
+        <div class="hidden md:flex" id="navbar-links">
             {links.map((l) => {
-                return <a aria-label={l.name} href={l.external ? l.url : url(l.url)} target={l.external ? "_blank" : null}
-                          class="btn-plain scale-animation rounded-lg h-11 font-bold px-5 active:scale-95"
+                return <a aria-label={l.name} 
+                          href={l.external ? l.url : url(l.url)} 
+                          target={l.external ? "_blank" : null}
+                          data-nav-url={l.external ? "" : l.url}
+                          class="btn-plain scale-animation rounded-lg h-11 font-bold px-5 active:scale-95 nav-link"
                 >
                     <div class="flex items-center">
                         {l.name}
@@ -60,6 +63,36 @@ let links: NavBarLink[] = navBarConfig.links.map(
         <DisplaySettings client:only="svelte"></DisplaySettings>
     </div>
 </div>
+
+<style>
+    #navbar-links {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    #nav-slider {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 44px;
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        pointer-events: none;
+        transition: left 0.3s ease, width 0.3s ease;
+        z-index: 0;
+        box-sizing: border-box;
+    }
+    
+    .nav-link {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .nav-link.nav-active {
+        color: var(--primary) !important;
+    }
+</style>
 
 <script>
 function switchTheme() {
@@ -101,7 +134,103 @@ function loadButtonScript() {
     }
 }
 
+// 创建滑动指示器
+function getSlider() {
+    let slider = document.getElementById('nav-slider');
+    if (!slider) {
+        slider = document.createElement('div');
+        slider.id = 'nav-slider';
+        const container = document.getElementById('navbar-links');
+        if (container) {
+            container.appendChild(slider);
+        }
+    }
+    return slider;
+}
+
+// 更新滑块位置
+function updateSlider(link, animate) {
+    const slider = getSlider();
+    const container = document.getElementById('navbar-links');
+    
+    if (!link || !container) {
+        slider.style.width = '0';
+        return;
+    }
+    
+    const linkRect = link.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const left = linkRect.left - containerRect.left;
+    const width = linkRect.width;
+    
+    if (!animate) {
+        slider.style.transition = 'none';
+    } else {
+        slider.style.transition = 'left 0.3s ease, width 0.3s ease';
+    }
+    
+    slider.style.left = left + 'px';
+    slider.style.width = width + 'px';
+    
+    if (!animate) {
+        // 强制重绘后恢复transition
+        void slider.offsetWidth;
+        slider.style.transition = 'left 0.3s ease, width 0.3s ease';
+    }
+}
+
+// 高亮当前页面的导航链接
+function highlightNav(animate = false) {
+    const path = window.location.pathname;
+    const links = document.querySelectorAll('.nav-link');
+    let activeLink = null;
+    
+    links.forEach(link => {
+        const url = link.getAttribute('data-nav-url');
+        // 跳过外部链接
+        if (!url || url === '') {
+            link.classList.remove('nav-active');
+            return;
+        }
+        
+        // 标准化路径比较
+        const normalizedPath = path.replace(/\/$/, '') || '/';
+        const normalizedUrl = url.replace(/\/$/, '') || '/';
+        
+        if (normalizedUrl === normalizedPath) {
+            link.classList.add('nav-active');
+            activeLink = link;
+        } else {
+            link.classList.remove('nav-active');
+        }
+    });
+    
+    updateSlider(activeLink, animate);
+}
+
+// 初始化
 loadButtonScript();
+highlightNav(false);
+
+// 窗口大小变化时更新
+window.addEventListener('resize', () => highlightNav(false));
+
+// swup 页面切换后更新
+document.addEventListener('swup:enable', () => {
+    if (window.swup) {
+        window.swup.hooks.on('page:view', () => {
+            loadButtonScript();
+            highlightNav(true);
+        });
+    }
+});
+
+if (window.swup) {
+    window.swup.hooks.on('page:view', () => {
+        loadButtonScript();
+        highlightNav(true);
+    });
+}
 </script>
 
 {import.meta.env.PROD && <script is:inline define:vars={{scriptUrl: url('/pagefind/pagefind.js')}}>
