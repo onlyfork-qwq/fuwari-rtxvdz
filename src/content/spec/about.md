@@ -1,7 +1,7 @@
 # about
  [本博客源码（原版）](https://bgithub.xyz/saicaca/fuwari).
 
-::github{repo="rtxvdz/fuwari"}
+::github{repo="onlyfork-qwq/fuwari"}
 # 博客免责声明及版权引用规范
 ## 一、免责声明
 1. 本博客所有内容均为博主个人基于开源项目的学习笔记、经验分享及技术交流，仅代表个人立场，与任何第三方机构、组织无关联，不构成任何官方观点或承诺。

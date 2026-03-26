@@ -137,7 +137,7 @@
     
     // 设置Giscus配置
     const config = {
-      'data-repo': giscusConfig.repo || 'RTXVDZ/pinglun',
+      'data-repo': giscusConfig.repo || 'onlyfork-qwq/pinglun',
       'data-repo-id': giscusConfig.repoId || 'R_kgDOQfRWyg',
       'data-category': giscusConfig.category || 'Announcements',
       'data-category-id': giscusConfig.categoryId || 'DIC_kwDOQfRWys4CzL22',
