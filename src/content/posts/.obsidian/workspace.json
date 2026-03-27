@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "121/ce.md",
+                "file": "openclaw-lese/openclaw-lese.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ce"
+              "title": "openclaw-lese"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 299.5
   },
   "right": {
     "id": "e98e748811ef1903",
@@ -185,11 +185,20 @@
   },
   "active": "012e7e96680081b3",
   "lastOpenFiles": [
+    "openclaw-lese/3.png",
+    "openclaw-lese/2.png",
+    "openclaw-lese/1.png",
+    "openclaw-lese/openclaw-lese.md",
+    "联系.md",
+    "openclaw-lese/PixPin_2026-03-27_18-50-35.png",
+    "cloudflare-site-up.md",
+    "openclaw-lese",
+    "新建文件夹",
+    "openclaw-lese.md",
+    "free-domain - 副本.md",
     "onlyfork-tk.md",
     "free-domain.md",
-    "cloudflare-site-up.md",
     "error.md",
-    "联系.md",
     "Untitled",
     "chengguo.png"
   ]

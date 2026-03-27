@@ -1,1 +1,4 @@
-{}
+{
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": true
+}

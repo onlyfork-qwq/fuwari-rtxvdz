@@ -14,6 +14,9 @@ import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+import InfoBox from "../../components/misc/InfoBox.astro";
+
+export const prerender = true;
 
 export async function getStaticPaths() {
 	const blogEntries = await getSortedPosts();
@@ -95,6 +98,9 @@ const jsonLd = {
                 ></PostMetadata>
                 {!entry.data.image && <div class="border-[var(--line-divider)] border-dashed border-b-[1px] mb-5"></div>}
             </div>
+
+            <!-- info box -->
+            <InfoBox info={entry.data.info} class="onload-animation" />
 
             <!-- always show cover as long as it has one -->
 

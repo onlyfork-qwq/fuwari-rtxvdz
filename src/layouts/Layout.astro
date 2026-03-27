@@ -383,7 +383,7 @@ const bannerOffset =
 				<!-- 公告图标按钮 -->
 				<button class="announcement-btn" id="announcement-btn" aria-label="公告">
 					<Icon name="material-symbols:campaign" class="text-xl" />
-					<span class="announcement-dot"></span>
+					<span class="announcement-dot" id="announcement-dot"></span>
 				</button>
 				
 				<!-- 公告内容面板 -->
@@ -394,8 +394,17 @@ const bannerOffset =
 							<Icon name="material-symbols:close" class="text-lg" />
 						</button>
 					</div>
-					<div class="announcement-body">
-						{announcementConfig.text}
+					<div class="announcement-body" id="announcement-body">
+					</div>
+					<div class="announcement-footer">
+						<button class="announcement-read-btn" id="announcement-read-btn" aria-label="标记已读">
+							<Icon name="material-symbols:check" class="text-lg" />
+							<span id="read-btn-text">标记已读</span>
+						</button>
+						<button class="announcement-unread-btn hidden" id="announcement-unread-btn" aria-label="标记未读">
+							<Icon name="material-symbols:undo" class="text-lg" />
+							<span>标记未读</span>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -814,7 +823,7 @@ if (window.swup) {
 </script>
 
 <!-- 公告样式 -->
-<style>
+<style is:global>
     .announcement-float {
         position: fixed;
         right: 20px;
@@ -902,7 +911,8 @@ if (window.swup) {
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
     
-    .announcement-close {
+    .announcement-close,
+    .announcement-read-btn {
         background: none;
         border: none;
         cursor: pointer;
@@ -912,7 +922,8 @@ if (window.swup) {
         transition: all 0.2s;
     }
     
-    .announcement-close:hover {
+    .announcement-close:hover,
+    .announcement-read-btn:hover:not(:disabled) {
         background: rgba(0, 0, 0, 0.1);
         color: #333;
     }
@@ -924,33 +935,203 @@ if (window.swup) {
         color: #333;
         max-height: 300px;
         overflow-y: auto;
+        word-break: break-word;
+    }
+    
+    .announcement-body :global(a) {
+        color: var(--primary) !important;
+        text-decoration: underline !important;
+    }
+    
+    .announcement-body :global(a:hover) {
+        opacity: 0.8;
+        text-decoration: underline !important;
+    }
+    
+    .announcement-dot.hidden {
+        display: none;
+    }
+    
+    .announcement-read-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px 16px;
+        border: none;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        background: transparent;
+        color: #22c55e;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+    
+    .announcement-read-btn:hover:not(:disabled) {
+        background: rgba(34, 197, 94, 0.1);
+    }
+    
+    .announcement-read-btn:disabled {
+        color: #9ca3af;
+        cursor: not-allowed;
+    }
+    
+    .announcement-read-btn.read {
+        color: #22c55e;
+    }
+    
+    .announcement-footer {
+        display: flex;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .announcement-read-btn,
+    .announcement-unread-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px 16px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+    
+    .announcement-unread-btn {
+        color: #f59e0b;
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .announcement-unread-btn:hover {
+        background: rgba(245, 158, 11, 0.1);
+    }
+    
+    .announcement-unread-btn.hidden {
+        display: none;
     }
 </style>
 
-<script>
-    // 公告交互
-    const btn = document.getElementById('announcement-btn');
-    const panel = document.getElementById('announcement-panel');
-    const closeBtn = document.getElementById('announcement-close');
-    const float = document.getElementById('announcement-float');
-    
-    let isOpen = false;
-    
-    btn?.addEventListener('click', () => {
-        isOpen = !isOpen;
-        panel?.classList.toggle('show', isOpen);
-    });
-    
-    closeBtn?.addEventListener('click', () => {
-        isOpen = false;
-        panel?.classList.remove('show');
-    });
-    
-    // 点击外部关闭
-    document.addEventListener('click', (e) => {
-        if (isOpen && !float?.contains(e.target as Node)) {
+<script define:vars={{ announcementText: announcementConfig.text }}>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('announcement-btn');
+        const panel = document.getElementById('announcement-panel');
+        const closeBtn = document.getElementById('announcement-close');
+        const readBtn = document.getElementById('announcement-read-btn');
+        const unreadBtn = document.getElementById('announcement-unread-btn');
+        const float = document.getElementById('announcement-float');
+        const dot = document.getElementById('announcement-dot');
+        const readBtnText = document.getElementById('read-btn-text');
+        const bodyEl = document.getElementById('announcement-body');
+        
+        // 处理换行符 \n
+        if (bodyEl) {
+            const formattedText = announcementText
+                .replace(/\n/g, '<br>')
+                .replace(/<a /g, '<a style="color: var(--primary); text-decoration: underline;" ');
+            bodyEl.innerHTML = formattedText;
+        }
+        
+        let isOpen = false;
+        let isRead = false;
+        
+        function hashStr(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            return hash.toString(36);
+        }
+        
+        const currentHash = hashStr(announcementText);
+        const STORAGE_KEY = 'announcement_read_hash';
+        
+        function updateUI() {
+            if (isRead) {
+                dot?.classList.add('hidden');
+                if (readBtnText) readBtnText.textContent = '已经读啦！';
+                if (readBtn) {
+                    readBtn.classList.add('read');
+                    readBtn.disabled = true;
+                }
+                if (unreadBtn) unreadBtn.classList.remove('hidden');
+            } else {
+                dot?.classList.remove('hidden');
+                if (readBtnText) readBtnText.textContent = '标记已读';
+                if (readBtn) {
+                    readBtn.classList.remove('read');
+                    readBtn.disabled = false;
+                }
+                if (unreadBtn) unreadBtn.classList.add('hidden');
+            }
+        }
+        
+        function checkAnnouncementRead() {
+            const storedHash = localStorage.getItem(STORAGE_KEY);
+            if (storedHash === currentHash) {
+                isRead = true;
+            } else {
+                isRead = false;
+            }
+            updateUI();
+        }
+        
+        function markAsRead() {
+            if (isRead) return;
+            localStorage.setItem(STORAGE_KEY, currentHash);
+            isRead = true;
+            updateUI();
             isOpen = false;
             panel?.classList.remove('show');
         }
+        
+        function markAsUnread() {
+            localStorage.removeItem(STORAGE_KEY);
+            isRead = false;
+            updateUI();
+        }
+        
+        function showPanel() {
+            isOpen = true;
+            panel?.classList.add('show');
+        }
+        
+        checkAnnouncementRead();
+        
+        if (!isRead) {
+            showPanel();
+        }
+        
+        btn?.addEventListener('click', () => {
+            isOpen = !isOpen;
+            panel?.classList.toggle('show', isOpen);
+        });
+        
+        closeBtn?.addEventListener('click', () => {
+            isOpen = false;
+            panel?.classList.remove('show');
+        });
+        
+        readBtn?.addEventListener('click', () => {
+            markAsRead();
+        });
+        
+        unreadBtn?.addEventListener('click', () => {
+            markAsUnread();
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (isOpen && !float?.contains(e.target)) {
+                isOpen = false;
+                panel?.classList.remove('show');
+            }
+        });
     });
 </script>

@@ -4,6 +4,8 @@ import friendsData from "../config/friends.json";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 import { Icon } from "astro-icon/components";
 
+export const prerender = true;
+
 // 从JSON文件加载友链数据
 const friends = friendsData;
 ---

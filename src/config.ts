@@ -61,7 +61,7 @@ export const navBarConfig: NavBarConfig = {
 		},
 		{
 			name: "服务监控",
-			url: "https://mon.2fo.cc/", // Internal links should not include the base path, as it is automatically added
+			url: "https://uptimekuma.2fo.cc/status/onlyfk", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
 	],
@@ -104,5 +104,5 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 
 export const announcementConfig: AnnouncementConfig = {
 	enable: true,
-	text: "博客功能ui大改以后每周会写两篇文章（应该）bushi~",
+	text: "更新文章<a href='/posts/openclaw-lese/openclaw-lese/'>Openclaw避坑</a>",
 };
