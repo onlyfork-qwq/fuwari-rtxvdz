@@ -3,15 +3,12 @@
 	"routes": [
 		{ "handle": "filesystem" },
 		{ "src": "/dm", "dest": "/posts/free-domain/", "status": 301 },
-		{ "src": "/mc", "dest": "/minecraft-server", "status": 301 },
+		{ "src": "/fq", "dest": "https://qm.qq.com/q/BNMUQQnqV4", "status": 301 },
 		{
-			"src": "/yy",
-			"dest": "https://www.mcmod.cn/class/3693.html",
+			"src": "/yp",
+			"dest": "https://rainydrive.cnrainycloudglobal.pp.ua",
 			"status": 301
 		},
-		{ "src": "/tk", "dest": "/posts/onlyfork-tk/", "status": 301 },
-		{ "src": "/fq", "dest": "https://qm.qq.com/q/BNMUQQnqV4", "status": 301 },
-		{ "src": "/yp", "dest": "https://rainydrive.cnrainycloudglobal.pp.ua", "status": 301 },
 		{
 			"src": "/zy",
 			"dest": "https://gh-proxy.com/https://github.com/ZombieStriker/QualityArmory-Resourcepack/releases/download/latest/QualityArmory-21.zip",
