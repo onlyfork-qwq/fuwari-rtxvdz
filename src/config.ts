@@ -102,7 +102,7 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	theme: "github-dark",
 };
 
-export const announcementConfig: AnnouncementConfig = {
+export	 const announcementConfig: AnnouncementConfig = {
 	enable: true,
-	text: "更新文章<a href='/posts/openclaw-lese/openclaw-lese/'>Openclaw避坑</a>",
+	text: "本站购买<a href='https://who.cx/0y.hk'>0y.hk</a>域名🎉🎉🎉\n更新文章<a href='/posts/openclaw-lese/openclaw-lese/'>Openclaw避坑</a>",
 };
