@@ -1,20 +1,30 @@
 {
-	"version": 2,
-	"routes": [
-		{ "handle": "filesystem" },
-		{ "src": "/dm", "dest": "/posts/free-domain/", "status": 301 },
-		{ "src": "/fq", "dest": "https://qm.qq.com/q/BNMUQQnqV4", "status": 301 },
+	"redirects": [
 		{
-			"src": "/yp",
-			"dest": "https://rainydrive.cnrainycloudglobal.pp.ua",
-			"status": 301
+			"source": "/dm",
+			"destination": "/posts/free-domain/",
+			"permanent": true
 		},
-		{ "src": "/xmy", "dest": "https://www.xmyvps.cn/aff/BPBABFOX", "status": 301 },
 		{
-			"src": "/zy",
-			"dest": "https://gh-proxy.com/https://github.com/ZombieStriker/QualityArmory-Resourcepack/releases/download/latest/QualityArmory-21.zip",
-			"status": 301
+			"source": "/fq",
+			"destination": "https://qm.qq.com/q/BNMUQQnqV4",
+			"permanent": true
 		},
-		{ "src": "/(.*)", "status": 404, "dest": "/404.html" }
-	]
+		{
+			"source": "/yp",
+			"destination": "https://rainydrive.cnrainycloudglobal.pp.ua",
+			"permanent": true
+		},
+		{
+			"source": "/xmy",
+			"destination": "https://www.xmyvps.cn/aff/BPBABFOX",
+			"permanent": true
+		},
+		{
+			"source": "/zy",
+			"destination": "https://gh-proxy.com/https://github.com/ZombieStriker/QualityArmory-Resourcepack/releases/download/latest/QualityArmory-21.zip",
+			"permanent": true
+		}
+	],
+	"rewrites": [{ "src": "/(.*)", "status": 404, "dest": "/404.html" }]
 }
