@@ -25,6 +25,5 @@
 			"destination": "https://gh-proxy.com/https://github.com/ZombieStriker/QualityArmory-Resourcepack/releases/download/latest/QualityArmory-21.zip",
 			"permanent": true
 		}
-	],
-	"rewrites": [{ "src": "/(.*)", "status": 404, "dest": "/404.html" }]
+	]
 }
