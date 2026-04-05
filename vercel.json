@@ -6,25 +6,9 @@
 			"permanent": true
 		},
 		{
-			"source": "/fq",
-			"destination": "https://qm.qq.com/q/BNMUQQnqV4",
-			"permanent": true
-		},
-		{
-			"source": "/yp",
-			"destination": "https://rainydrive.cnrainycloudglobal.pp.ua",
-			"permanent": true
-		},
-		{
 			"source": "/xmy",
 			"destination": "https://www.xmyvps.cn/aff/BPBABFOX",
-			"permanent": true
-		},
-		{
-			"source": "/zy",
-			"destination": "https://gh-proxy.com/https://github.com/ZombieStriker/QualityArmory-Resourcepack/releases/download/latest/QualityArmory-21.zip",
 			"permanent": true
 		}
 	]
 }
-"invalid": true
