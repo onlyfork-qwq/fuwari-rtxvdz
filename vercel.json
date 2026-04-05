@@ -1,14 +1,9 @@
 {
-	"redirects": [
+	"routes": [
 		{
-			"source": "/dm",
-			"destination": "/posts/free-domain/",
-			"permanent": true
-		},
-		{
-			"source": "/xmy",
-			"destination": "https://www.xmyvps.cn/aff/BPBABFOX",
-			"permanent": true
+			"src": "/xmy",
+			"dest": "https://www.xmyvps.cn/aff/BPBABFOX",
+			"status": 301
 		}
 	]
 }
