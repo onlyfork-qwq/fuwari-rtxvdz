@@ -8,6 +8,11 @@ let isVerified = false;
 let isLoading = true;
 let error = null;
 
+if (!CAPTCHA_ID) {
+	error = "PUBLIC_GEETEST_CAPTCHA_ID 环境变量未设置，请在 .env 文件中配置";
+	isLoading = false;
+}
+
 // 验证成功回调函数
 export let onVerified = () => {};
 
@@ -18,6 +23,7 @@ export let giscusConfig = {};
 
 // 初始化极验验证
 function initGeetest() {
+	if (!CAPTCHA_ID) return;
 	// 检查是否已经加载了极验脚本
 	if (typeof window.initGeetest4 === "undefined") {
 		// 动态加载极验脚本
@@ -166,6 +172,7 @@ function loadComments() {
 }
 
 onMount(() => {
+	if (!CAPTCHA_ID) return;
 	initGeetest();
 
 	// 监听页面可见性变化，离开页面后重置验证状态
