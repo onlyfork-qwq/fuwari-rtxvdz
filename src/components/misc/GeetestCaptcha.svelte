@@ -28,7 +28,7 @@ function initGeetest() {
 			initializeCaptcha();
 		};
 		script.onerror = () => {
-			error = "无法加载极验验证脚本";
+			error = "无法加载极验验证脚本!";
 			isLoading = false;
 		};
 		document.head.appendChild(script);
