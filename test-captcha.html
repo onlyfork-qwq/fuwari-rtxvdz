@@ -61,8 +61,14 @@
 
     <script src="https://static.geetest.com/v4/gt4.js"></script>
     <script>
-        // 你的极验Captcha ID
-        const CAPTCHA_ID = "0d777c8c300ebee3bb39b98b9cc95b21";
+        // 从URL参数或localStorage获取Captcha ID，或显示配置提示
+        const urlParams = new URLSearchParams(window.location.search);
+        const CAPTCHA_ID = urlParams.get('id') || localStorage.getItem('geetest_captcha_id') || null;
+        
+        if (!CAPTCHA_ID) {
+            document.getElementById('status').textContent = '请在URL中添加 ?id=你的CaptchaID 参数或设置 localStorage.geetest_captcha_id';
+            document.getElementById('status').className = 'status error';
+        }
         
         // 更新状态显示
         function updateStatus(message, type = 'loading') {
@@ -136,6 +142,10 @@
         
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
+            if (!CAPTCHA_ID) {
+                return;
+            }
+            
             // 检查是否已经验证过（24小时内有效）
             const verified = localStorage.getItem('geetest_verified');
             const timestamp = localStorage.getItem('geetest_timestamp');
