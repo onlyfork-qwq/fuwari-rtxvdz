@@ -8,20 +8,7 @@ interface Props {
 const { class: className, style } = Astro.props;
 ---
 
-<WidgetLayout id="umami-stats" class:list={[className]} {style}>
-    <div class="flex items-center gap-2 mb-2">
-        <div class="font-bold text-lg text-neutral-900 dark:text-neutral-100 relative ml-3
-            before:w-1 before:h-4 before:rounded-md before:bg-[var(--primary)]
-            before:absolute before:-left-3 before:top-[5.5px]">统计</div>
-        <a href="https://cloud.umami.is/share/Qv9rT2AhTplfxLco" target="_blank" rel="noopener noreferrer"
-           class="text-neutral-400 hover:text-[var(--primary)] transition-colors" title="查看详细统计">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-        </a>
-    </div>
+<WidgetLayout name="统计" id="umami-stats" class:list={[className]} {style}>
     <div class="text-center py-2">
         <div class="text-3xl font-bold text-neutral-900 dark:text-neutral-100" id="total-pageviews">-</div>
         <div class="text-sm text-neutral-500 dark:text-neutral-400">总浏览量</div>
@@ -40,9 +27,9 @@ const { class: className, style } = Astro.props;
 
 <script>
 const UMAMI_CONFIG = {
-    baseUrl: 'https://cloud.umami.is/analytics/us/api',
+    baseUrl: 'https://cloud.umami.is/analytics/us/api', // 如果你选的区域是欧盟，请改为 https://cloud.umami.is/analytics/eu/api
     websiteId: '3da8c934-2c50-4e2b-9b0d-fe33f7e57c45',
-    shareToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaGFyZUlkIjoiYmQ1OWRiYjYtOWFmOS00NTZkLWIwNWEtNWZiOWYxODUyY2NlIiwic2hhcmVUeXBlIjoxLCJwYXJhbWV0ZXJzIjp7InV0bSI6ZmFsc2UsImdvYWxzIjpmYWxzZSwiZXZlbnRzIjp0cnVlLCJjb21wYXJlIjp0cnVlLCJmdW5uZWxzIjpmYWxzZSwicmV2ZW51ZSI6ZmFsc2UsImpvdXJuZXlzIjpmYWxzZSwib3ZlcnZpZXciOnRydWUsInJlYWx0aW1lIjp0cnVlLCJzZXNzaW9ucyI6dHJ1ZSwiYnJlYWtkb3duIjp0cnVlLCJyZXRlbnRpb24iOmZhbHNlLCJhdHRyaWJ1dGlvbiI6ZmFsc2UsInBlcmZvcm1hbmNlIjp0cnVlfSwid2Vic2l0ZUlkIjoiM2RhOGM5MzQtMmM1MC00ZTJiLTliMGQtZmUzM2Y3ZTU3YzQ1IiwiaWF0IjoxNzc2MzMzODgzfQ.ekGxJ6MIP6EI7vu2386xKdUeIydyZcXQ2JwibUi7vtA'
+    shareToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaGFyZUlkIjoiYmQ1OWRiYjYtOWFmOS00NTZkLWIwNWEtNWZiOWYxODUyY2NlIiwic2hhcmVUeXBlIjoxLCJ…ZCI6IjNkYThjOTM0LTJjNTAtNGUyYi05YjBkLWZlMzNmN2U1N2M0NSIsImlhdCI6MTc3NjMzNjg4NH0.rYaxWGYwQuhRM9S_VMHaCUh30xsQzeG71itmVDbo9ck'
 };
 
 function formatNumber(num: number): string {
