@@ -370,6 +370,8 @@ const bannerOffset =
 
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
 
+		<link rel="stylesheet" href="/src/styles/main.css" />
+
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
 		  data-overlayscrollbars-initialize
@@ -410,10 +412,27 @@ const bannerOffset =
 			</div>
 		)}
 
-		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
-		<div id="page-height-extend" class="hidden h-[300vh]"></div>
-	</body>
-</html>
+		        <!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
+		        <div id="page-height-extend" class="hidden h-[300vh]"></div>
+		
+		        <!-- 流星雨效果容器 -->
+		        <div class="meteor-shower" id="meteor-shower"></div>
+		
+		        <!-- 流星雨初始化脚本 -->
+		        <script>
+		            (function() {
+		                const shower = document.getElementById('meteor-shower');
+		                if (!shower) return;
+		
+		                // 生成 20 个流星
+		                for (let i = 0; i < 20; i++) {
+		                    const meteor = document.createElement('div');
+		                    meteor.className = 'meteor';
+		                    shower.appendChild(meteor);
+		                }
+		            })();
+		        </script>
+		    </body></html>
 
 <style is:global define:vars={{
 	bannerOffset,

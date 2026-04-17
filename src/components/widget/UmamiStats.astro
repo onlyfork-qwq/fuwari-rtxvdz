@@ -9,8 +9,8 @@ const { class: className, style } = Astro.props;
 
 const UMAMI_CONFIG = {
 	enable: true,
-	baseUrl: "https://u.0y.hk", // 你的统计地址
-	shareId: "kXWWnu6L9txtK9PT", // 从Umami分享设置中获取
+	baseUrl: "https://u.0y.hk", // 根URL，不带路径
+	shareId: "kXWWnu6L9txtK9PT", // 分享链接中的短ID
 	timezone: "Asia/Shanghai",
 };
 ---  
@@ -145,10 +145,10 @@ async function loadStats() {
 			{ timezone: UMAMI_CONFIG.timezone }  
 		);  
   
-		// Umami API 返回 { pageviews: { value: N }, visits: { value: N }, visitors: { value: N } }  
-		document.getElementById('total-pageviews').textContent = formatNumber(data.pageviews?.value ?? 0);  
-		document.getElementById('total-visits').textContent    = formatNumber(data.visits?.value ?? 0);  
-		document.getElementById('total-visitors').textContent  = formatNumber(data.visitors?.value ?? 0);  
+		// API 返回直接数字：{ pageviews: 123, visits: 456, visitors: 789 }  
+		document.getElementById('total-pageviews').textContent = formatNumber(data.pageviews || 0);  
+		document.getElementById('total-visits').textContent    = formatNumber(data.visits || 0);  
+		document.getElementById('total-visitors').textContent  = formatNumber(data.visitors || 0);  
 	} catch (error) {  
 		console.error('获取Umami统计数据失败:', error);  
 		['total-pageviews', 'total-visits', 'total-visitors'].forEach(id => {  
