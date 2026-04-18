@@ -104,5 +104,5 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 
 export const announcementConfig: AnnouncementConfig = {
 	enable: true,
-	text: "本站购买<a href='https://who.cx/0y.hk'>0y.hk</a>域名🎉🎉🎉\n更新文章 <a href='/posts/openclaw-lese/openclaw-lese/'>Openclaw避坑</a>\n说明：现在的umami官方已封堵token&websiteid的获取方式\n本站已迁移自建",
+	text: "本站购买<a href='https://who.cx/0y.hk'>0y.hk</a>域名🎉🎉🎉\n更新文章 <a href='/posts/openclaw-lese/openclaw-lese/'>Openclaw避坑</a>",
 };
