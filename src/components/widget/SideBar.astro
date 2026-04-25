@@ -1,8 +1,8 @@
 ---
 import type { MarkdownHeading } from "astro";
 import Profile from "./Profile.svelte";
-import UmamiStats from "./UmamiStats.svelte";
-import UptimeStatus from "./UptimeStatus.svelte";
+import UmamiStats from "./UmamiStats.astro";
+import UptimeStatus from "./UptimeStatus.astro";
 
 interface Props {
 	class?: string;
@@ -14,7 +14,7 @@ const className = Astro.props.class;
 <div id="sidebar" class:list={[className, "w-full"]}>
     <div class="flex flex-col w-full gap-4 mb-4">
         <Profile client:only="svelte"></Profile>
-        <UmamiStats client:only="svelte" class="onload-animation" style="animation-delay: 200ms"></UmamiStats>
-        <UptimeStatus client:only="svelte" class="onload-animation" style="animation-delay: 175ms"></UptimeStatus>
+        <UmamiStats class="onload-animation" style="animation-delay: 200ms"></UmamiStats>
+        <UptimeStatus class="onload-animation" style="animation-delay: 175ms"></UptimeStatus>
     </div>
 </div>
