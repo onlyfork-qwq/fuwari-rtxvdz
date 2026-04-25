@@ -4,9 +4,6 @@
     .card-base {
         @apply rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] transition;
     }
-    h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, blockquote, code, pre, table, th, td, strong {
-        @apply transition;
-    }
     .card-shadow {
         @apply drop-shadow-[0_2px_4px_rgba(0,0,0,0.005)]
     }
@@ -164,10 +161,8 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 当页面有banner时，导航栏使用半透明效果 */
-#banner-wrapper ~ * #navbar > div,
-body:has(#banner-wrapper) #navbar > div {
-    backdrop-filter: blur(20px) !important;
+/* 当页面有banner时，导航栏使用半透明效果（避免 :has 和高模糊导致重绘压力） */
+.enable-banner #navbar > div {
     background: rgba(255, 255, 255, 0.55) !important;
     border: 1px solid rgba(255, 255, 255, 0.55) !important;
     border-radius: 0.75rem !important;
@@ -176,25 +171,21 @@ body:has(#banner-wrapper) #navbar > div {
 }
 
 /* 暗色主题下的半透明效果 */
-:root.dark #banner-wrapper ~ * #navbar > div,
-:root.dark body:has(#banner-wrapper) #navbar > div {
+:root.dark .enable-banner #navbar > div {
     background: rgba(0, 0, 0, 0.55) !important;
     border: 1px solid rgba(0, 0, 0, 0.55) !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
 }
 
 /* 显示设置面板的半透明效果 */
-#banner-wrapper ~ * #display-setting,
-body:has(#banner-wrapper) #display-setting {
-    backdrop-filter: blur(20px) !important;
+.enable-banner #display-setting {
     background: rgba(255, 255, 255, 0.55) !important;
     border: 1px solid rgba(255, 255, 255, 0.55) !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* 暗色主题下的显示设置面板半透明效果 */
-:root.dark #banner-wrapper ~ * #display-setting,
-:root.dark body:has(#banner-wrapper) #display-setting {
+:root.dark .enable-banner #display-setting {
     background: rgba(0, 0, 0, 0.55) !important;
     border: 1px solid rgba(0, 0, 0, 0.55) !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
@@ -202,8 +193,7 @@ body:has(#banner-wrapper) #display-setting {
 
 /* 主题切换保护 - 禁用过渡动画以防止闪烁 */
 .is-theme-transitioning #navbar > div,
-.is-theme-transitioning #banner-wrapper ~ * #navbar > div,
-.is-theme-transitioning body:has(#banner-wrapper) #navbar > div,
+.is-theme-transitioning .enable-banner #navbar > div,
 .is-theme-transitioning #display-setting {
     transition: none !important;
 }

@@ -1,19 +1,17 @@
 /* Page transition animations with Swup */
 html.is-changing .transition-swup-fade {
-    @apply transition-all duration-200
+    transition: opacity 140ms ease-out;
 }
 html.is-animating .transition-swup-fade {
-    @apply opacity-0 translate-y-4
+    opacity: 0;
 }
 
 /* Fade-in animations for components */
-@keyframes fade-in-up {
+@keyframes fade-in {
     0% {
-        transform: translateY(2rem);
         opacity: 0;
     }
     100% {
-        transform: translateY(0);
         opacity: 1;
     }
 }
@@ -21,14 +19,14 @@ html.is-animating .transition-swup-fade {
 /* Main components */
 .onload-animation {
     opacity: 0;
-    animation: 300ms fade-in-up;
+    animation: 160ms fade-in ease-out;
     animation-fill-mode: forwards;
 }
 #navbar {
     animation-delay: 0ms
 }
 #sidebar {
-    animation-delay: 100ms
+    animation-delay: 40ms
 }
 #swup-container {
     outline: none;
@@ -37,17 +35,42 @@ html.is-animating .transition-swup-fade {
     animation-delay: var(--content-delay);
 }
 .footer {
-    animation-delay: 250ms;
+    animation-delay: 60ms;
 }
 #banner-credit {
-    animation-delay: 400ms;
+    animation-delay: 80ms;
 }
 
 /* Post content */
 #post-container :nth-child(1) { animation-delay: calc(var(--content-delay) + 0ms) }
-#post-container :nth-child(2) { animation-delay: calc(var(--content-delay) + 50ms) }
-#post-container :nth-child(3) { animation-delay: calc(var(--content-delay) + 100ms) }
-#post-container :nth-child(4) { animation-delay: calc(var(--content-delay) + 175ms) }
-#post-container :nth-child(5) { animation-delay: calc(var(--content-delay) + 250ms) }
-#post-container :nth-child(6) { animation-delay: calc(var(--content-delay) + 325ms) }
+#post-container :nth-child(2) { animation-delay: calc(var(--content-delay) + 0ms) }
+#post-container :nth-child(3) { animation-delay: calc(var(--content-delay) + 0ms) }
+#post-container :nth-child(4) { animation-delay: calc(var(--content-delay) + 0ms) }
+#post-container :nth-child(5) { animation-delay: calc(var(--content-delay) + 0ms) }
+#post-container :nth-child(6) { animation-delay: calc(var(--content-delay) + 0ms) }
+
+/* Reduce transform-based motion on common interactive elements */
+.btn-regular,
+.btn-card,
+.btn-plain,
+.link,
+.link-lg,
+.expand-animation::before {
+    transition-property: opacity, background-color, color, border-color, box-shadow;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.is-changing .transition-swup-fade,
+    .onload-animation,
+    #post-container :nth-child(1),
+    #post-container :nth-child(2),
+    #post-container :nth-child(3),
+    #post-container :nth-child(4),
+    #post-container :nth-child(5),
+    #post-container :nth-child(6) {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+    }
+}
 

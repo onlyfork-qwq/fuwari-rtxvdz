@@ -31,30 +31,11 @@ export type SiteConfig = {
 			url?: string;
 		};
 	};
-		background: {
-
-
+	meteorShower: {
 		enable: boolean;
-
-
-		src: string;
-
-
-		position?: "top" | "center" | "bottom";
-
-
-		size?: "cover" | "contain" | "auto";
-
-
-		repeat?: "no-repeat" | "repeat" | "repeat-x" | "repeat-y";
-
-
-		attachment?: "fixed" | "scroll" | "local";
-
-
-		opacity?: number;
-
-
+		meteorCount?: number;
+		brightness?: number;
+		baseDurationSec?: number;
 	};
 	toc: {
 		enable: boolean;
@@ -90,7 +71,7 @@ export type NavBarConfig = {
 export type ProfileConfig = {
 	avatar?: string;
 	name: string;
-	bio?: string;
+	bioFile?: string;
 	links: {
 		name: string;
 		url: string;

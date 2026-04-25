@@ -2,11 +2,12 @@
 
 import { getEntry, render } from "astro:content";
 import Markdown from "@components/misc/Markdown.astro";
+import { Icon } from "astro-icon/components";
+import { profileConfig } from "../config";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
-import { profileConfig } from "../config";
-import { Icon } from "astro-icon/components";
+import TypedBio from "../components/widget/TypedBio.svelte";
 
 export const prerender = true;
 
@@ -28,7 +29,9 @@ const config = profileConfig;
 
             <!-- 名字和简介 -->
             <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">{config.name}</h1>
-            <p class="text-neutral-500 dark:text-neutral-400 mb-5">{config.bio}</p>
+            <p class="text-neutral-500 dark:text-neutral-400 mb-5 min-h-[1.5em]">
+                {config.bioFile && <TypedBio client:only="svelte" filePath={config.bioFile} />}
+            </p>
 
             <!-- 社交链接 -->
             <div class="flex gap-3 mb-6">
@@ -57,6 +60,29 @@ const config = profileConfig;
                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-100/80 dark:bg-neutral-800/80 text-sm hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors">
                     <Icon name="mdi:triangle" class="text-lg"></Icon>
                     <span>Vercel</span>
+                </a>
+            </div>
+
+            <div class="flex flex-wrap gap-3 justify-center mb-6" aria-label="扩展技术栈">
+                <a href="https://icon-icons.com/zh/authors/107-icon-icons" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-100/80 dark:bg-neutral-800/80 text-sm hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors">
+                    <img src="/chatgpt.svg" alt="ChatGPT" class="w-5 h-5" style="margin-right:6px;" />
+                    <span>ChatGPT</span>
+                </a>
+                <a href="https://chatglm.cn/" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-100/80 dark:bg-neutral-800/80 text-sm hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors">
+                    <img src="https://chatglm.cn/favicon.ico" alt="GLM" class="w-5 h-5" style="margin-right:6px;" />
+                    <span>GLM</span>
+                </a>
+                <a href="https://cloudflare.com" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-100/80 dark:bg-neutral-800/80 text-sm hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors">
+                    <img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare" class="w-5 h-5" style="margin-right:6px;" />
+                    <span>Cloudflare</span>
+                </a>
+                <a href="https://svelte.dev" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-100/80 dark:bg-neutral-800/80 text-sm hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors">
+                    <img src="https://cdn.simpleicons.org/svelte" alt="Svelte" class="w-5 h-5" style="margin-right:6px;" />
+                    <span>Svelte</span>
                 </a>
             </div>
 

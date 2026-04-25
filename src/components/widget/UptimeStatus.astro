@@ -33,6 +33,7 @@ interface Props {
 }
 
 const { class: className, style } = Astro.props;
+const FETCH_TIMEOUT_MS = 1800;
 
 let allServicesStatus = "获取状态失败";
 let statusCode = -1; // -1: error, 0: all down, 1: partial down, 2: all up
@@ -55,11 +56,30 @@ const getStatusText = (status: number) => {
 	return "异常";
 };
 
+const fetchWithTimeout = async (url: string) => {
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+	try {
+		return await fetch(url, {
+			signal: controller.signal,
+			headers: {
+				"cache-control": "no-cache",
+			},
+		});
+	} finally {
+		clearTimeout(timeoutId);
+	}
+};
+
 try {
 	const [heartbeatRes, statusPageRes] = await Promise.all([
-		fetch(HEARTBEAT_API_URL),
-		fetch(STATUS_PAGE_URL),
+		fetchWithTimeout(HEARTBEAT_API_URL),
+		fetchWithTimeout(STATUS_PAGE_URL),
 	]);
+
+	if (!heartbeatRes.ok || !statusPageRes.ok) {
+		throw new Error("Uptime API response is not ok");
+	}
 
 	const data = await heartbeatRes.json();
 	const statusPageHtml = await statusPageRes.text();
