@@ -217,7 +217,7 @@
         <span class={`relative z-[1] truncate text-[0.88rem] font-semibold tracking-[0.02em] [text-shadow:0_1px_0_rgba(255,255,255,0.25)] dark:[text-shadow:0_1px_0_rgba(0,0,0,0.45)] ${config?.color}`}>{allServicesStatus}</span>
       </div>
       <div class="relative z-[1] flex h-2.5 w-2.5 shrink-0">
-        {config?.ping && <span class={`animate-ping absolute inline-flex h-full w-full rounded-full ${config.pingColor} opacity-70`}></span>}
+        {config?.ping && <span class={`animate-ping absolute inline-flex h-full w-full rounded-full ${config?.pingColor} opacity-70`}></span>}
         <span class={`relative inline-flex h-2.5 w-2.5 rounded-full ${config?.dotGlow} ${config?.dot}`}></span>
       </div>
     </a>
