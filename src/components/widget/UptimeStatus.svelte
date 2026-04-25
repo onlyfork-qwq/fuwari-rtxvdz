@@ -204,7 +204,7 @@
   import { onMount } from 'svelte';
 </script>
 
-<WidgetLayout name="状态" id="uptime-status" class:list={[className]} {style}>
+<WidgetLayout name="状态" id="uptime-status" class={className} {style}>
   <div class={`overflow-hidden rounded-2xl border shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] ${config?.bg} ${config?.border}`}>
     <a
       href={STATUS_PAGE_URL}

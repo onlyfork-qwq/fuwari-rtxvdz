@@ -164,7 +164,7 @@
   import { onMount } from 'svelte';
 </script>
 
-<WidgetLayout name="统计" id="umami-stats" class:list={[className, "cursor-pointer transition-opacity active:scale-95"]} {style}>
+<WidgetLayout name="统计" id="umami-stats" class={`${className} cursor-pointer transition-opacity active:scale-95`} {style}>
   <a href={shareUrl} target="_blank" rel="noopener noreferrer" class="block">
     <div class="text-center py-2">
       <div class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">{formatNumber(pageviews)}</div>
