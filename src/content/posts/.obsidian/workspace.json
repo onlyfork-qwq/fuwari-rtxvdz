@@ -11,12 +11,14 @@
             "id": "012e7e96680081b3",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "openclaw-lese/3.png"
+                "file": "zhi-link/zhi-link.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "3"
+              "icon": "lucide-file",
+              "title": "zhi-link"
             }
           }
         ]
@@ -183,7 +185,12 @@
   },
   "active": "012e7e96680081b3",
   "lastOpenFiles": [
+    "cloudflare-site-up.md",
     "zhi-link/zhi-link.md",
+    "联系.md",
+    "chengguo.png",
+    "free-domain.md",
+    "openclaw-lese/3.png",
     "zhi-link/img/Pasted image 20260426132034.png",
     "zhi-link/img/Pasted image 20260426131921.png",
     "zhi-link/img/Pasted image 20260426131548.png",
@@ -193,12 +200,7 @@
     "zhi-link/img/Pasted image 20260426130340.png",
     "zhi-link/img/Pasted image 20260426130256.png",
     "zhi-link/img/Pasted image 20260426125803.png",
-    "zhi-link/img/Pasted image 20260426125656.png",
-    "zhi-link/img/Pasted image 20260426125523.png",
-    "联系.md",
     "openclaw-lese/openclaw-lese.md",
-    "free-domain.md",
-    "cloudflare-site-up.md",
     "zhi-link/img",
     "openclaw-lese/openclaw-lese 1.md",
     "zhi-link/openclaw-lese 1.md",
