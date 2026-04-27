@@ -61,11 +61,6 @@ export const navBarConfig: NavBarConfig = {
 			url: "/gh-proxy/", // 站内链接
 			external: false, // 是否为外链（false 表示站内）
 		},
-		{
-			name: "服务监控", // 导航名称：服务监控
-			url: "https://uptimekuma.2fo.cc/status/onlyfk", // 外部监控页面地址
-			external: true, // 是否为外链（true 会新标签打开）
-		},
 	],
 };
 
