@@ -123,7 +123,7 @@ const bannerOffset =
 				  media={favicon.theme && `(prefers-color-scheme: ${favicon.theme})`}
 			/>
 		))}
-		<script defer src="https://cloud.umami.is/script.js" data-website-id="ae67fee2-0f2a-46b9-bfde-d495c8334931"></script>
+		{siteConfig.umamiEnabled && <script defer src="https://cloud.umami.is/script.js" data-website-id="ae67fee2-0f2a-46b9-bfde-d495c8334931"></script>}
 		<!-- Set the theme before the page is rendered to avoid a flash -->
 		<script is:inline define:vars={{DEFAULT_THEME, LIGHT_MODE, DARK_MODE, AUTO_MODE, BANNER_HEIGHT_EXTEND, PAGE_WIDTH, configHue, forceDarkMode: siteConfig.themeColor.forceDarkMode, useTransparentCards: meteorEnabled}}>
 			// Lock interactions before first paint/load to avoid premature scroll/click.

@@ -43,6 +43,8 @@ export type SiteConfig = {
 	};
 
 	favicon: Favicon[];
+
+	umamiEnabled: boolean; // 是否启用 Umami 统计（false 时禁用统计脚本和统计组件显示）
 };
 
 export type Favicon = {

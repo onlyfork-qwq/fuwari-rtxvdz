@@ -3,8 +3,17 @@
   import { url } from "../../utils/url-utils";
   import TypedBio from "./TypedBio.svelte";
   import Icon from "@iconify/svelte";
+  import { onMount } from "svelte";
 
   const config = profileConfig;
+
+  // 每次挂载生成带时间戳的头像 URL，防止浏览器缓存
+  let avatarSrc = "";
+
+  onMount(() => {
+    const separator = config.avatar.includes("?") ? "&" : "?";
+    avatarSrc = `${config.avatar}${separator}t=${Date.now()}`;
+  });
 </script>
 
 <div class="card-base p-3">
@@ -15,7 +24,7 @@
     w-full h-full z-50 flex items-center justify-center">
       <Icon icon="fa6-regular:address-card" class="transition opacity-0 scale-90 group-hover:scale-100 group-hover:opacity-100 text-white text-5xl" />
     </div>
-    <img src={config.avatar || ""} alt="Profile Image of the Author" class="mx-auto lg:w-full h-full lg:mt-0" />
+    <img src={avatarSrc} alt="Profile Image of the Author" class="mx-auto lg:w-full h-full lg:mt-0" />
   </a>
   <div class="px-2">
     <div class="font-bold text-xl text-center mb-1 dark:text-neutral-50 transition">{config.name}</div>

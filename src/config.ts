@@ -39,11 +39,12 @@ export const siteConfig: SiteConfig = {
 	},
 	favicon: [
 		{
-			src: "/111.jpg", // 网站图标路径（相对 /public）
+			src: "https://q2.qlogo.cn/headimg_dl?dst_uin=334063894&spec=0&v=1", // 网站图标路径（相对 /public）；v=1 为缓存版本号，头像更新时递增
 			theme: "light", // 对应主题（light / dark，可选）
 			sizes: "32x32", // 图标尺寸声明（可选）
 		},
 	],
+	umamiEnabled: import.meta.env.PROD, // Umami 统计开关：true=启用（加载统计脚本并显示统计组件），false=禁用（本地开发时建议设为 false）
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -57,7 +58,7 @@ export const navBarConfig: NavBarConfig = {
 			external: false, // 是否为外链（false 表示站内）
 		},
 		{
-			name: "GH反代", // 导航名称：GitHub反代
+			name: "Github加速下载", // 导航名称：GitHub反代
 			url: "/gh-proxy/", // 站内链接
 			external: false, // 是否为外链（false 表示站内）
 		},
@@ -65,7 +66,7 @@ export const navBarConfig: NavBarConfig = {
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "https://q2.qlogo.cn/headimg_dl?dst_uin=334063894&spec=0", // 头像地址
+	avatar: "https://q2.qlogo.cn/headimg_dl?dst_uin=334063894&spec=0&v=1", // 头像地址
 	name: "只会复制onlyfork", // 昵称
 	bioFile: "/rubbish.txt",
 	links: [
@@ -73,11 +74,6 @@ export const profileConfig: ProfileConfig = {
 			name: "bilibili", // 社交平台名称
 			icon: "fa6-brands:bilibili", // 图标标识
 			url: "https://b23.tv/slUca1M", // 跳转链接
-		},
-		{
-			name: "QQ", // 社交平台名称
-			icon: "fa6-brands:qq", // 图标标识
-			url: "https://qm.qq.com/q/57Jx7nqmeY", // 跳转链接
 		},
 		{
 			name: "GitHub", // 社交平台名称
@@ -99,5 +95,5 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 
 export const announcementConfig: AnnouncementConfig = {
 	enable: true, // 是否启用公告浮窗
-	text: "本站购买<a href='https://who.cx/0y.hk'>0y.hk</a>域名🎉🎉🎉\n更新文章 <a href='/posts/openclaw-lese/openclaw-lese/'>Openclaw避坑</a>", // 公告内容（支持 HTML）
+	text: "本站购买<a href='https://who.cx/0y.hk'>0y.hk</a>域名🎉🎉🎉\n更新文章 <a href='/posts/zhi-link/zhi-link/'>文件直连下载</a>", // 公告内容（支持 HTML）
 };
