@@ -3,7 +3,7 @@ import Icon from "@iconify/svelte";
 
 let inputUrl = "";
 let outputUrl = "";
-let selectedSource = "gh-proxy";
+let selectedSource = "hk-gh-proxy";
 let toastMsg = "";
 let toastVisible = false;
 let toastTimer: ReturnType<typeof setTimeout> | null = null;
@@ -14,10 +14,10 @@ function generate() {
 		showToast("请先输入链接");
 		return;
 	}
-	if (selectedSource === "gh-proxy") {
-		outputUrl = `https://gh-proxy.com/${val}`;
+	if (selectedSource === "hk-gh-proxy") {
+		outputUrl = `https://hk.gh-proxy.com/${val}`;
 	} else {
-		outputUrl = val.replace("github.com", "gh.2x.nz");
+		outputUrl = `https://gh-proxy.com/${val}`;
 	}
 }
 
@@ -79,6 +79,21 @@ function showToast(msg: string) {
       <div class="flex gap-3">
         <button
           class="flex-1 px-4 py-2.5 rounded-lg font-medium border-2 transition-all active:scale-95"
+          class:bg-[var(--primary)]={selectedSource === "hk-gh-proxy"}
+          class:text-white={selectedSource === "hk-gh-proxy"}
+          class:border-[var(--primary)]={selectedSource === "hk-gh-proxy"}
+          class:bg-neutral-100={selectedSource !== "hk-gh-proxy"}
+          class:dark:bg-neutral-800={selectedSource !== "hk-gh-proxy"}
+          class:border-neutral-200={selectedSource !== "hk-gh-proxy"}
+          class:dark:border-neutral-700={selectedSource !== "hk-gh-proxy"}
+          class:text-neutral-900={selectedSource !== "hk-gh-proxy"}
+          class:dark:text-neutral-100={selectedSource !== "hk-gh-proxy"}
+          on:click={() => { selectedSource = "hk-gh-proxy"; }}
+        >
+          hk.gh-proxy.com「推荐」
+        </button>
+        <button
+          class="flex-1 px-4 py-2.5 rounded-lg font-medium border-2 transition-all active:scale-95"
           class:bg-[var(--primary)]={selectedSource === "gh-proxy"}
           class:text-white={selectedSource === "gh-proxy"}
           class:border-[var(--primary)]={selectedSource === "gh-proxy"}
@@ -91,21 +106,6 @@ function showToast(msg: string) {
           on:click={() => { selectedSource = "gh-proxy"; }}
         >
           gh-proxy.com
-        </button>
-        <button
-          class="flex-1 px-4 py-2.5 rounded-lg font-medium border-2 transition-all active:scale-95"
-          class:bg-[var(--primary)]={selectedSource === "gh-2xnz"}
-          class:text-white={selectedSource === "gh-2xnz"}
-          class:border-[var(--primary)]={selectedSource === "gh-2xnz"}
-          class:bg-neutral-100={selectedSource !== "gh-2xnz"}
-          class:dark:bg-neutral-800={selectedSource !== "gh-2xnz"}
-          class:border-neutral-200={selectedSource !== "gh-2xnz"}
-          class:dark:border-neutral-700={selectedSource !== "gh-2xnz"}
-          class:text-neutral-900={selectedSource !== "gh-2xnz"}
-          class:dark:text-neutral-100={selectedSource !== "gh-2xnz"}
-          on:click={() => { selectedSource = "gh-2xnz"; }}
-        >
-          gh.2x.nz「推荐-全站反代-By:AcoFork」
         </button>
       </div>
     </div>
